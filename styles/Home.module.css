@@ -1,5 +1,9 @@
 .container {
-  padding: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .main {
@@ -112,18 +116,5 @@
   .grid {
     width: 100%;
     flex-direction: column;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .card,
-  .footer {
-    border-color: #222;
-  }
-  .code {
-    background: #111;
-  }
-  .logo img {
-    filter: invert(1);
   }
 }
