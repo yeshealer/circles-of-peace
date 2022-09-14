@@ -51,6 +51,9 @@ export function UpdateChannelModal({ visible, setVisible, channel, callback }) {
         setEcr_contractType(_encRules.contractType);
         setEcr_contractAddress(_encRules.contractAddress);
         setEcr_contractMinTokenBalance(_encRules.minTokenBalance);
+        if(_encRules.tokenId) {
+          setEcr_tokenId(_encRules.tokenId);
+        }
       } else {
         setIsTokenGated(false);
       }
