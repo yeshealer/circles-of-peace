@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { sleep, randomId, shortAddress, contractToCleanName } from "../utils";
+import { sleep, randomId, shortAddress, contractToCleanName, cleanBody } from "../utils";
+import reactStringReplace from 'react-string-replace';
 
 /** Import UI components */
 import { User, PfP } from "./User"
@@ -13,14 +14,15 @@ import { GlobalContext } from "../contexts/GlobalContext";
 let _mentions = [];
 
 /** Export postbox component */
-export function PostBox({ type = "feed", action = "share-post", callback, placeholder = "Share your post here...", context = null, master = null, reply_to = null, encryptionRules = null }) {
+export function PostBox({ type = "feed", action = "share-post", editedPost = null, callback, placeholder = "Share your post here...", context = null, master = null, reply_to = null, encryptionRules = null, setEditPost }) {
   const { user, setUser, orbis } = useContext(GlobalContext);
-  const [content, setContent] = useState();
+  const [content, setContent] = useState(editedPost ? editedPost.content?.body : null);
   const [status, setStatus] = useState(0);
   const [enterTrigger, setEnterTrigger] = useState(false);
   const [mentionBoxVis, setMentionsBoxVis] = useState(false);
   const [focusOffset, setFocusOffset] = useState(null);
   const [focusNode, setFocusNode] = useState(null);
+  const [defaultBody, setDefaultBody] = useState();
   const postBoxArea = useRef(null);
 
   useEffect(() => {
@@ -31,9 +33,27 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
     }
   }, [reply_to])
 
+  /** Format the body if we are editing a post */
   useEffect(() => {
+    if(editedPost && editedPost.content) {
+      let body = reactStringReplace(editedPost.content.body, '\n', function(match, i) {
+        return <br key={match + i}/>;
+      });
+      setDefaultBody(body);
+    }
+  }, [])
+
+  useEffect(() => {
+    /** Pre-select enter trigger for chat or replies */
     if(type == "chat" || type == "reply") {
       setEnterTrigger(true);
+    }
+
+    /** Autofocus on postBoxArea if editing post */
+    if(action == "edit-post") {
+      if(postBoxArea.current) {
+        postBoxArea.current.focus();
+      }
     }
   }, [type])
 
@@ -43,6 +63,16 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
     _body = _body.replaceAll("\n\n\n", "\n\n");
 
     /** Generate the content object based on if we are sharing a post or sending a DM (it's using the same component) */
+    let _master = master;
+    if(reply_to && reply_to.reply_to_details) {
+      if(reply_to.reply_to_details.master) {
+        _master = reply_to.reply_to_details.master;
+      }
+    }
+
+    if(_master == undefined) {
+      _master = null;
+    }
     let _content;
     switch (action) {
       case "share-post":
@@ -50,9 +80,19 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
           type: type,
           body: _body,
           context: context,
-          master: master ? master : null,
+          master: _master,
           reply_to: reply_to ? reply_to.stream_id : null,
           mentions: _mentions
+        }
+        break;
+      case "edit-post":
+        _content = {
+          type: editedPost.content?.type,
+          body: _body,
+          context: editedPost.content?.context,
+          master: editedPost.content?.master ? editedPost.content?.master : null,
+          reply_to: editedPost.content?.reply_to ? editedPost.content?.reply_to : null,
+          mentions: editedPost.content?.mentions
         }
         break;
       case "send-message":
@@ -77,12 +117,12 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
       temporary_id: _randomId,
       stream_id: "none",
       content: _content,
-      master: master,
+      master: _master,
       reply_to: reply_to ? reply_to.stream_id : null,
       reply_to_details: reply_to ? reply_to.reply_to_details : null,
       reply_to_creator_details: reply_to ? reply_to.creator : null
     }
-    if(callback) {
+    if(callback && action != "edit-post") {
       callback(_callbackContent);
     }
 
@@ -92,13 +132,15 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
     /** Reset postbox content */
     _mentions = [];
     setContent(null);
-    if(postBoxArea.current) {
+    if(postBoxArea.current && action != "edit-post") {
       postBoxArea.current.textContent = "";
       postBoxArea.current.focus();
     }
 
     /** If post is being shared in a feed we show the success state */
-    if(type == "feed") {
+    if(action == "edit-post") {
+      setStatus(1);
+    } else if(type == "feed") {
       setStatus(2);
       await sleep(150);
 
@@ -111,23 +153,44 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
   async function sharePost(randomId, _content, callbackContent) {
     /** Actually share post on Ceramic */
     let res;
-    if(action == "share-post") {
-      if(encryptionRules) {
-        res = await orbis.createPost(_content, encryptionRules)
-      } else {
-        res = await orbis.createPost(_content)
-      }
+    switch (action) {
+      /** Share a post */
+      case "share-post":
+        if(encryptionRules) {
+          res = await orbis.createPost(_content, encryptionRules)
+        } else {
+          res = await orbis.createPost(_content)
+        }
+        break;
 
-    } else if(action == "send-message") {
-      res = await orbis.sendMessage(_content);
+      /** Edit a post */
+      case "edit-post":
+        if(encryptionRules) {
+          res = await orbis.editPost(editedPost.stream_id, _content, encryptionRules)
+        } else {
+          res = await orbis.editPost(editedPost.stream_id, _content)
+        }
+        break;
+
+      /** Send a new message */
+      case "send-message":
+        res = await orbis.sendMessage(_content);
+      break;
+      default:
+        console.log("This post box doesn't have any action.");
+        return;
+        break;
     }
 
     /** Display final status according to response from SDK */
+    console.log("res sharing post: ", res);
     switch (res.status) {
       case 200:
         if(callback) {
           callbackContent.stream_id = res.doc;
-          callback(callbackContent);
+          if(action != "send-message") {
+            callback(callbackContent);
+          }
         }
         break;
       case 300:
@@ -166,6 +229,7 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
 
     /** Share post if enter is pressed */
     if(e.nativeEvent.inputType == "insertParagraph" || (e.nativeEvent.inputType == "insertText" &&  e.nativeEvent.data == null)) {
+      console.log("e.nativeEvent:", e.nativeEvent);
       if(enterTrigger == true) {
         e.preventDefault();
         e.stopPropagation();
@@ -236,7 +300,7 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
   if(!user) {
     return (
       <div className="postbox connect p-15">
-        <p className="center mtop-0">You need to be connected to share content.</p>
+        <p className="center mtop-0">You can connect using your <b>Ethereum</b> or <b>Solana</b> wallet to share content.</p>
         <div className="center">
           <ConnectButton />
         </div>
@@ -252,17 +316,61 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
     )
   }
 
+  /** User doesn't have any activity on a blockchain */
+  if(user.nonces && user.nonces?.global <= 0 && user.a_r <= 1) {
+    return (
+      <div className="no-blockchain-activity">
+        <img src="/img/icons/eye-crossed-yellow.png" height="18" />
+        <p>It looks like you are joining from an inactive wallet so your posts might not be visible for other users for now. We recommend joining with an active wallet.</p>
+      </div>
+    )
+  }
+
+  if(encryptionRules && user.hasLit == false) {
+    return(
+      <div className="no-blockchain-activity flex-column w-100">
+        <div className="flex-row">
+          <img src="/img/icons/locked-tertiary.png" height="18" />
+          <p>You need to setup your private account to share token gated content.</p>
+        </div>
+        <p className="mtop-10 center">
+          <ConnectButton onlyLit={true} title="Generate private account" />
+        </p>
+      </div>
+    )
+  }
+
+  /** Render edit-post container */
+  if(action == "edit-post") {
+    return(
+      <div className="edit-post-container">
+        <div
+          ref={postBoxArea}
+          id="postbox-area"
+          className="content editable"
+          contentEditable={true}
+          autoFocus={true}
+          data-placeholder={placeholder}
+          onInput={(e) => handleInput(e)}>{defaultBody}</div>
+        <div className="flex flex-1 relative">
+          {/** Show mentions box if state is true */}
+          {mentionBoxVis &&
+            <MentionsBox
+              add={addMention}
+              hideMentionsBoxVis={hideMentionsBoxVis}
+              visible={mentionBoxVis}/>
+          }
+        </div>
+        <p className="content mtop-5 flex-row">
+          <span className="link-edit" onClick={() => setEditPost(false)}>Cancel</span>
+          <span className="mleft-5 mright-5 secondary"> · </span><ShareButtonContent type="edit-post" status={status} share={share} />
+        </p>
+      </div>
+    )
+  }
+
   return(
     <div className="flex-column w-100">
-      {/** User doesn't have any activity on a blockchain */}
-      {user.nonces && user.nonces?.global <= 0 && user.a_r <= 1 &&
-        <div className="no-blockchain-activity">
-          <img src="/img/icons/eye-crossed-yellow.png" height="18" />
-          <p>It looks like you are joining from an inactive wallet so your posts might not be visible for other users for now. We recommend joining with an active wallet.</p>
-        </div>
-      }
-
-
       {/** If user is replying to another post, we show the parent details here */}
       {(reply_to && reply_to.stream_id != master ) &&
         <div className="postbox-reply-to">
@@ -303,7 +411,7 @@ export function PostBox({ type = "feed", action = "share-post", callback, placeh
             </div>
           }
         </div>
-        <div className="flex flex-1">
+        <div className="flex flex-1 relative">
           {/** Show mentions box if state is true */}
           {mentionBoxVis &&
             <MentionsBox
@@ -371,6 +479,31 @@ function ShareButtonContent({type, status, share}) {
       }
       break;
 
+    /** Save button for editing post */
+    case "edit-post":
+      switch (status) {
+        /** User hasn't started sharing */
+        case 0:
+          return <span className="link-edit" onClick={() => share()}>Save</span>;
+
+        /** Waiting for response from Orbis SDK */
+        case 1:
+          return <span className="link-edit align-items-v-center"><img src="/img/icons/loading-white.svg" height="15" /></span>;
+
+        /** Sharing was successful */
+        case 2:
+          return <span className="link-edit">Success</span>;
+
+        /** Error sharing post */
+        case 3:
+          return <span className="red">Error!</span>;
+
+        /** Default */
+        default:
+          return <span className="link-edit" onClick={() => share()}>Share</span>;
+      }
+        break;
+
     /** Share button for chat feeds and replies in comments threads */
     default:
       switch (status) {
@@ -395,5 +528,6 @@ function ShareButtonContent({type, status, share}) {
           return <div className="btn md purple pointer">Ok</div>;
       }
       break;
+
   }
 }

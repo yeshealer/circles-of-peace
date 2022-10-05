@@ -65,6 +65,7 @@ export function Feed({type = "feed", showPostBox = true, context = null, did = n
     if(did) {
       /** Query posts from a specific profile */
       query = orbis.getPosts({did: did}, _page);
+      //query = orbis.getPosts({ algorithm: "all-did-master-posts", did: did });
     } else if(context) {
       /** Query with or without context */
       query = orbis.getPosts({context: context}, _page);
@@ -169,7 +170,11 @@ export function Feed({type = "feed", showPostBox = true, context = null, did = n
           <div className="floating-menu">
               <p onClick={() => updateAlgo("recommendations")}>{algo == "recommendations" && <img src="/img/icons/check-green.png" className="mright-5" height="14" />}Recommendations</p>
               <p onClick={() => updateAlgo("all-posts")}>{algo == "all-posts" && <img src="/img/icons/check-green.png" className="mright-5" height="14" />}All posts</p>
-              <p onClick={() => updateAlgo("all-posts-non-filtered")}>{algo == "all-posts-non-filtered" && <img src="/img/icons/check-green.png" className="mright-5" height="14" />}Non filtered all posts</p>
+
+              {/** Only show "All filtered posts" to admins */}
+              {user && (user.did == "did:pkh:eip155:1:0x075286d1a22b083ebcaf6b7fb4cf970cfc4a18f0" || user.did == "did:pkh:eip155:1:0x9fd07f4ee4f18e27f9d958fb42e8ea2e6ee547bd") &&
+                <p onClick={() => updateAlgo("all-posts-non-filtered")}>{algo == "all-posts-non-filtered" && <img src="/img/icons/check-green.png" className="mright-5" height="14" />}Non filtered all posts</p>
+              }
           </div>
         }
       </div>

@@ -48,6 +48,23 @@ function App({ Component, pageProps }) {
   const [createChannelModalVisible, setCreateChannelModalVisible] = useState(false);
   const [updateChannelModalVisible, setUpdateChannelModalVisible] = useState(false);
 
+  /** Once user is connected we load the user groups */
+  useEffect(() => {
+    if(!user) {
+      checkUserIsConnected();
+    }
+  }, [user]);
+
+  /** We call this function on launch to see if the user has an existing Ceramic session. */
+  async function checkUserIsConnected() {
+    let res = await orbis.isConnected();
+
+    /** If SDK returns user details we save it in state */
+    if(res && res.status == 200) {
+      setUser(res.details);
+    }
+  }
+
   /** Handler to also set `group_id` in addition to the visibility state */
   function setModalVis(type, vis, data, callback) {
     /** Set visibility of the good modal type */
