@@ -1,18 +1,17 @@
-## Documentation: Orbis SDK
+## Circles of Peace aka. Circles for Impact
 
-This example is built using the [Orbis SDK](https://orbis.club/developers) that developers can use to created decentralized and composable social applications / features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers).
+Circles of Peace (to be launched on circlesforimpact . org in the following weeks, is being built using the [Orbis SDK](https://orbis.club/developers) that developers can use to created decentralized and composable social applications / features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers).
 
-We encourage you to fork this repository and start building on top of the Orbis SDK! You can also use this project to embed your own community discussion layer on your own website instead of relying on centralized alternatives.
+It'll be embedded to our community discussion layer, and will be gated for those expressed and acknowledged peace, and given that assurance as citizen or world resident behaviours, as of Expression of Peace V3 and Acknowledgement of Peace V2 as well deployed in parallel. 
 
-To do so, simply update the `GROUP_ID` value in the `app.js` file to load your own group instead. Group creation isn't available in this project for now, if you want to create a new group you can do so using the [orbis.club](https://orbis.club/) app or update this repository to support the [createGroup](https://orbis.club/developers/api-documentation/createGroup) function from the SDK.
+@ https://demoVer.se and https://expressionsofpeace.org, we'll be using Orbis Protocol, so will not be relying solely on centralized alternatives for resilience and transparency being on top priority for us.
 
-**Example:** This repository is a replica of the experience that you can have on any Orbis group such as the official [Orbis Community](https://orbis.club/group/kjzl6cwe1jw14ai2gg8e0qmx2j944ppe3s3dgfk003jlb8guuybyg4m77nsrg73) group.
 
-## Getting Started
+## Getting Started with development:
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, run the development server:
+To run the development server:
 
 ```bash
 npm run dev
