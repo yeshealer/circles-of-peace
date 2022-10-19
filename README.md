@@ -1,4 +1,4 @@
-## Circles of Peace, a gateway to Circles for Impact
+## Circles of Peace, as a gateway to Circles for Impact
 In the main project, [demoVerse](https://demoVer.se), and focused one, [Expressions of Peace](https://expressionsofpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, as social layer to peace and trust-making, for resilience and transparency being on top priority for us. 
 
 Circles of Peace* , is being built using the [Orbis SDK](https://orbis.club/developers) that developers can use to created decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
