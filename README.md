@@ -1,27 +1,23 @@
 ## Circles of Peace, as a gateway to Circles for Impact
-In the main project, [demoVerse](https://demoVer.se), and focused one, [Expressions of Peace](https://expressionsofpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, as social layer to peace and trust-making, for resilience and transparency being on top priority for us. 
+In the main project, [demoVerse](https://demoVer.se), and focused one, [Expressions of Peace](https://expressionsofpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, as social layer of peace and trust-making; as resilience and transparency being on top priority for our efforts, all along.
 
-Circles of Peace* , is being built using the [Orbis SDK](https://orbis.club/developers) that developers can use to created decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
+Circles of Peace* , is being built on top of the [Orbis SDK](https://orbis.club/developers) and its use case, [Orbis groups](https://app.orbis.club) this very repository is forked. 
 
-Peacemakers that have expressed and acknowledged peace, and given that assurance, will be invited to Circles of Peace (social component) and Circles for Impact (metaverse-like virtual spacse, eg. welo.space and gather.town).
+With these infrastructure, developers can use to create decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
 
 
-In those environments/spaces, we'll be observing people, as sovereign individuals, taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, as that's being decentralised, for the 21st century.
+
+## A World Peace by Equality and Equity
+
+Peacemakers that have expressed and acknowledged peace through Circles of Peace, and given that assurance, will be invited to Circles for Impact, a metaverse-like virtual spaces, eg. welo.space and gather.town is considered to start with.
+
+In those spaces, we'll be observing people, as sovereign individuals, taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, as that's being decentralised, for the 21st century.
 
 It'll be embedded to our community discussion layer, and be a gateway to Circles for Impact. 
 
->> here is the gateway to Circles for Impact.
-![Peacemakers@orbis](https://i.imgur.com/PUlaIa1.png)
->>
->> we will be sending $peace and $wisdom tokens and one of  official/platform NFTs dedicated by artists in our existing community on discord, for you to access to Peacemakers community on orbis.club // there you will be invited to Circles for Impact, right away.
 
->> wait a second ...
+We will be sending $peace and $wisdom tokens and one of  official/platform NFTs dedicated by artists in our existing community on discord, for you to access to Peacemakers community on orbis.club // there you will be invited to Circles for Impact, right away.
 
->> isn't this a lot of effort to make it to a place where we want to quickly start making +impact? 
-
->> well, it might just be so. that's why, we would completely switch to orbis sdk, and a Post, basically becomes an expression of peace, and interactions would be acknowledgements of peace. 
-
->> that was how we've imagined so far, already. then we would make expressions and acknowledgements of peace channels non-gated, and create invitation channel(s) for the Circles for Impact environments from there. // feels like this is more like it.. 
 
 ![tokenGating@orbis](https://i.imgur.com/JL6PZJm.png)
 
@@ -68,7 +64,7 @@ along with finalising resolutions in a [Liquid Democracy](https://en.wikipedia.o
 ![Circles4Impact @ welo.space](https://i.imgur.com/POdJTEK.png)
 
 
->> These virtual spaces, will be launched @  circlesforimpact . org in the following weeks. Not there yet. 
+>> These virtual spaces, will be designed together, and launched @  circlesforimpact . org throughout the following weeks/months with joint efforts by artists, designers, developers, community catalyzers, policy makers and people of any peaceful background.
 
 >> spoiler: those circles will not be that isolated or dedicated to only one goal/problem to solve. It's all connected, we'll see a lot combinatorics and fusions in their states of coexistance.
 
@@ -78,7 +74,7 @@ What's next?
 --
 What we want, before 2022 ending is wrapping up the token research and engineering for incentive tokens @ [Optimistic Flow of Peace](https://expressionsofpeace.org/an-optimistic-flow-of-peace.png). 
 
-And as of 2023, initiate a Decentralized Exchange for those incentive tokens and for Circles for Impact, define quite bunch of tokens of abstract type $cause, for the actual funding of those projects. (eg. $food $education $air $water ..)
+And as of 2023, a Decentralized Exchange will be initiated for those incentive tokens and for Circles for Impact, and a set of crypto tokens of abstract type $cause will be defined and minted, for the actual funding of those projects. (eg. $food $education $air $water ..)
 
  They could have been only one token, called $impact, but what we want is not that. We'd like to observe this diversity of challenges, and of course, see how needs interrelate and that being kept as measurable as possible. 
 
