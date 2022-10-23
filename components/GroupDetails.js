@@ -53,7 +53,9 @@ export function GroupDetails() {
 
     if(group.content.pfp || group.content.metadata?.pfp) {
       if(group.content.pfp) {
-        return <img src={group.content.pfp} className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
+        return <img src="https://expressionsofpeace.org/colorful-peace.png" className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
+
+        // return <img src={group.content.pfp} className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
       }
 
       if(group.content.metadata?.pfp) {
@@ -86,11 +88,12 @@ export function GroupDetails() {
                   <GroupPfp />
                 }
 
-                <h1>{group.content.name ? group.content.name : group.content.metadata.name}</h1>
+                {/* <h1>{group.content.name ? group.content.name : group.content.metadata.name}</h1> */}
+                <h1>Peacemakers</h1>
 
                 {/** Only display description if available */}
                 {group.content.description &&
-                  <p className="mbottom-0">{group.content.description}</p>
+                  <p className="mbottom-0">GenerationPeace! How would you imagine, express, acknowledge and make a World Peace, in the 21st century?</p>
                 }
                 {group.content.metadata?.description &&
                   <p className="mbottom-0">{group.content.metadata?.description}</p>
