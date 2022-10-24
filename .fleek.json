@@ -3,5 +3,6 @@
       "image": "fleek/next-js",
       "command": "npm install && npm run build",
       "publicDir": "out"
+      
     }
    }
