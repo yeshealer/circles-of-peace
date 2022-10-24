@@ -74,6 +74,6 @@ function SearchResults({search, add}) {
       )
     });
   } else {
-    return <p>We haven't found any users for this username.</p>
+    return <p>We haven{"'"}t found any users for this username.</p>
   }
 }

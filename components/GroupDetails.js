@@ -160,6 +160,7 @@ function LoopChannels({channels}) {
     if(channel.content) {
       return (
         <MenuItemLevel2
+        key={key}
           title={channel.content.name}
           image={getChannelIcon(channel, false)}
           imageActive={getChannelIcon(channel, true)}

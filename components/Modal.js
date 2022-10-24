@@ -40,11 +40,11 @@ function Tabs({tabs, tabSelected, setTabSelected}) {
   return tabs.map((tab, key) => {
     if(key == tabSelected) {
       return(
-        <div className="modal-tab active">{tab}</div>
+        <div className="modal-tab active" key={key}>{tab}</div>
       )
     } else {
       return(
-        <div className="modal-tab" onClick={setTabSelected ? () => setTabSelected(key) : console.log("You haven't added the function to select a new tab.")}>{tab}</div>
+        <div className="modal-tab" key={key} onClick={setTabSelected ? () => setTabSelected(key) : console.log("You haven't added the function to select a new tab.")}>{tab}</div>
       )
     }
 

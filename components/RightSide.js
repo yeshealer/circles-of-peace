@@ -165,7 +165,7 @@ function LoopActiveUsers({activeUsers}) {
       )
     });
   } else {
-    return(<p className="w-100 secondary center">There isn't any new user to discover.</p>)
+    return(<p className="w-100 secondary center">There isn{"'"}t any new user to discover.</p>)
   }
 }
 
@@ -183,7 +183,7 @@ function LoopActiveGroups({activeGroups}) {
       )
     });
   } else {
-    return(<p className="w-100 secondary center">There isn't any new group to discover.</p>)
+    return(<p className="w-100 secondary center">There isn{"'"}t any new group to discover.</p>)
   }
 }
 

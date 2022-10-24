@@ -311,7 +311,7 @@ export function PostBox({ type = "feed", action = "share-post", editedPost = nul
   if(user && user.a_r < 0) {
     return(
       <div className="postbox connect p-15">
-        <p className="center mtop-0 mbottom-0">You can't post on Orbis right now.</p>
+        <p className="center mtop-0 mbottom-0">You can{"'"}t post on Orbis right now.</p>
       </div>
     )
   }
