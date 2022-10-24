@@ -219,7 +219,7 @@ export function Feed({type = "feed", showPostBox = true, context = null, did = n
             <>
               {/** Show posts or empty state */}
               {!posts || posts.length == 0 ?
-                <p className="center w-100 tertiary">There isn't any post shared here.</p>
+                <p className="center w-100 tertiary">There isn{"'"}t any post shared here.</p>
               :
                 <>
                   <div className="flex-row mbottom-10 relative">
@@ -249,7 +249,7 @@ export function Feed({type = "feed", showPostBox = true, context = null, did = n
           {/** Show posts or empty state */}
           {!posts || posts.length == 0 ?
             <div className="flex-1">
-              <p className="center w-100 tertiary">There isn't any post shared in this channel.</p>
+              <p className="center w-100 tertiary">There isn{"'"}t any post shared in this channel.</p>
             </div>
           :
             <div className="flex-1 feed-posts-container chat">

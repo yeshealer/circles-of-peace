@@ -163,7 +163,7 @@ export function Post({post, type, showContext = true, replyTo, setReplyTo = fals
       {/** Show follow bar */}
       {user && following && following.length > 0 && user.did != post.creator && following.includes(post.creator) == false && type == "feed" &&
         <div className="no-blockchain-activity follow flex-row center mtop-10" style={{justifyContent: "center", padding: 10}}>
-          <p className="mright-10">You aren't following this user</p>
+          <p className="mright-10">You aren{"'"}t following this user</p>
           <FollowButton did={post.creator} />
         </div>
       }
@@ -389,7 +389,7 @@ function EncryptedPostBody({post, characterLimit}) {
     return (
       <div className="no-blockchain-activity">
         <img src="/img/icons/locked-tertiary.png" height="18" />
-        <p>This post is token-gated for <a className="blue-bold-link" href={explorerLink} target="_blank" rel="noreferrer">{contract}</a> holders and you don't have access to it.</p>
+        <p>This post is token-gated for <a className="blue-bold-link" href={explorerLink} target="_blank" rel="noreferrer">{contract}</a> holders and you don{"'"}t have access to it.</p>
       </div>
     )
   }

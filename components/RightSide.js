@@ -330,7 +330,7 @@ function LoopUserGroups({groupMemberships}) {
       )
     });
   } else {
-    return <p className="w-100 center tertiary mtop-10">This user isn't a member of any group.</p>
+    return <p className="w-100 center tertiary mtop-10">This user isn{"'"}t a member of any group.</p>
   }
 }
 
