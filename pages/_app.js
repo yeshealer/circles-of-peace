@@ -102,11 +102,11 @@ function App({ Component, pageProps }) {
   return(
     <>
       <Head>
-          <title key="title">Orbis Group</title>
-          <meta name="description" content="Orbis is a fully decentralized social layer for the internet that any developers can use to build their own social apps or features." key="description"></meta>
-          <meta property="og:title" content="Orbis Group" key="og_title" />
-          <meta property="og:description" content="Orbis is a fully decentralized social layer for the internet that any developers can use to build their own social apps or features." key="og_description"/>
-          <meta name="twitter:site" content="@OrbisClub" />
+          <title key="title">Circles of Peace</title>
+          <meta name="description" content="Peace, is a start: Circles of Peace, as a gateway to Circles for +Impact." key="description"></meta>
+          <meta property="og:title" content="Circles of Peace" key="og_title" />
+          <meta property="og:description" content="Peace, is a start: Circles of Peace, as a gateway to Circles for +Impact." key="og_description"/>
+          <meta name="twitter:site" content="@demoversal" />
           <meta name="twitter:card" content="app" />
           <link rel="icon" href="/favicon.png" />
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
