@@ -32,7 +32,7 @@ TimeAgo.addDefaultLocale(en);
 let orbis = new Orbis();
 
 /** Update this group id to display a new group */
-const GROUP_ID = "kjzl6cwe1jw14ai2gg8e0qmx2j944ppe3s3dgfk003jlb8guuybyg4m77nsrg73";
+const GROUP_ID = "kjzl6cwe1jw147jurloxh41cderszpog6t2bho8kwoa90jfvj9dk0z930oykndk";
 
 let tempCallback;
 
