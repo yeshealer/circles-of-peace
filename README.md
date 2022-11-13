@@ -1,22 +1,60 @@
 ## Circles of Peace for +Impact 
 ## aka. ~ Circles for +Impact
-In the main project, [demoVerse](https://demoVer.se), and focused one, [Expressions of Peace](https://expressionsofpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, as social layer of peace and trust-making; as resilience and transparency being on top priority for our efforts, all along.
+In the main project, [demoVerse](https://demoVer.se), and focused one, 
+
+[A World Peace](https://aworldpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, for the social layer of peace and trust-making; as resilience and transparency being on top priority for our efforts, all along.
+
+In the meantime, launched as of 5th of November, we have started [Expressions of Demand](https://expressionsofdemand.org) to boost this decentralised diplomacy movement with a political dimension brought into place: 
+
+*A proactive electorship, with civic sanctions. That will be part of Circles of Impact and peacemakers will be able to include them as an attachments to their Expressions of Peace.*
+
+Between August to October 2022, we have made way through a proof of concept decentralised app/ DApp, [Expressions of Peace](https://expressionsofpeace.org), and people from several countries have experienced how fun and easy peace and trustmaking can be.
 
 Circles of Peace for +Impact* , is being built on top of the [Orbis SDK](https://orbis.club/developers) and its use case, [Orbis groups](https://app.orbis.club) this very repository is forked. 
 
 With these infrastructure, developers can use to create decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
 
 
-
 ## Peace, as a start:
 
-Peacemakers that have expressed and acknowledged peace through Circles of Peace, and given that assurance, will be invited to Circles for Impact, a metaverse-like virtual spaces, eg. welo.space and gather.town is considered to start with.
+Peacemakers that have expressed and acknowledged peace through Circles of Peace for +Impact, and given that assurance, will be invited to metaverse-like virtual spaces, eg. welo.space and gather.town is considered to start with.
 
-In those spaces, we'll be observing people, as sovereign individuals, taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, as that's being decentralised, for the 21st century.
+In these spaces, we'll be observing people, as sovereign individuals, taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, as that's being decentralised, for the 21st century.
 
-Through Expressions, Acknowledgements, Reflections and later Attestations of Peace, we'd like to interpret basic social media interactions for an initial set of decentralized peace and trust making activities.
+---
+@ Circles for Impact, we will not have moderation or censorship, nor a centralised data store. 
 
-![Circles4Impact @ welo.space](https://i.imgur.com/U8qgEdP.png)
+All data for expressions, acknowledgements and reflections of peace will be publicly available and immutable/non-changeable through a decentralised data store, called [Ceramic Network](https://ceramic.network/), which is the data persistence layer Orbis Protocol is using under the hood.
+
+```
+{
+  "body": "I think the need for your platform has risen sharply in recent hours...",
+  "type": "reply",
+  "media": [],
+  "master": "kjzl6cwe1jw147zg2qahkiwkqvuagktb7wbwyjqxqsjzupy3nbx9drfbu3j3k0p",
+  "context": "kjzl6cwe1jw147jurloxh41cderszpog6t2bho8kwoa90jfvj9dk0z930oykndk",
+  "mentions": [],
+  "reply_to": "kjzl6cwe1jw147zg2qahkiwkqvuagktb7wbwyjqxqsjzupy3nbx9drfbu3j3k0p"
+}
+```
+
+
+For instance, for a post made there, you can follow the green icon and 
+[check that on Ceramic's cerscan](https://cerscan.com/mainnet/stream/kjzl6cwe1jw14aj5hcl20od0gbgucv86ptqsts6oogfafvamsrq0m300tvxb0ic)
+ and see the content available publicly, and the post message exist on <strong>body</strong> part there, just like that.
+
+![cerscan link](https://i.imgur.com/s5Z4Dp7.png)
+
+
+---
+Through expressions, acknowledgements, reflections and later attestations of peace, we'd like to interpret basic social media interactions for an initial set of peace and trust making activities. 
+
+
+
+![Interpretation of social media interactions for peacemaking](https://i.imgur.com/U8qgEdP.png)
+
+
+For that purpose, we are preparing an initial draft for a terms of use, and certificates/documents to be generated on-demand, eg.in the forms of [Non-fungible Tokens / NFTs](https://en.wikipedia.org/wiki/Non-fungible_token) and those certificates, when listed (to sell or display-only) will be part of the Library of Peace, an NFT marketplace as what's done here is an Art of Peace.
 
 
 This platform, Circles of Peace for +Impact, aka. Circles for Impact, is a gateway to come together and give the least assurance to the rest of the world, as citizens or as-is, by default as world residents.
@@ -27,12 +65,7 @@ This platform, Circles of Peace for +Impact, aka. Circles for Impact, is a gatew
 
 <!-- ![tokenGating@orbis](https://i.imgur.com/JL6PZJm.png)
  -->
-
---
-Good news: as we use our right on being equal on peace and trust making, and express & acknowledge that for one another explicitly, we are somehow, already fulfilling UN Sustainable Development Goals [10](https://sdgs.un.org/goals/goal10), [16](https://sdgs.un.org/goals/goal16) and [17](https://sdgs.un.org/goals/goal17), before moving into the Circles for Impact. 
-
-----
-
+---
 <strong> *SDG#5:*</strong> Gender Equality: As of 19 September 2022, only 13 women are in executive government positions as leaders of their countries/states.
 
 Considering 193 member states in the United Nations, women in executive positions are represented as low as 6-7%, and that, sadly, also goes for the official peacemaking/sealing activities of course.
@@ -41,7 +74,12 @@ So that goes almost 50%/50% between genders with that egalitarian way, without h
 
 <strong> *SDG#10:*</strong> Reduced inequalities within and among countries: In our case, it's also among people.
 
->> Remember? It's our right now, being a co-signer/sealer of a world peace treaty, even if we are not official signers of our countries/states. 
+![Circles4Impact @ welo.space](https://i.imgur.com/z3YrWbM.png)
+
+
+>> "Everyone is free to be proactive, claim their equality and free will to act on peace and trust making; and be legitimate co-signer and sealer of a World Peace treaty, regardless of their entitlement, being official or not."
+
+^ This human right, concept, perspective and notion shall be a canvas; on which our kind making Art of Peace, together. 
 
 
 <strong>*SDG#16:*</strong> Peace, justice and strong institutions >> we'd like to empower United Nations and all the states to build and boost civic capacity for such goals and causes. 
@@ -52,7 +90,13 @@ So that goes almost 50%/50% between genders with that egalitarian way, without h
 So that's the consensus we got there,as in a common sense and understanding as well a high level of generosity and intentionality. Well, internationality as well :)
 
 
-The collaboration spaces of Circles for Impact are being designed to exist as [metaverse-like virtual environments](https://www.youtube.com/watch?v=Ek7AvWng7J8), for impact generating and scaling learnings and cooperations around making of [Inner Development Goals](https://www.innerdevelopmentgoals.org/) and [United Nations Sustainable Development Goals](https://sdgs.un.org/) centric projects, with communication, coordination, collaboration and resolution tools and more to bring in. It's all there, we're just focusing existing technology, and for the new ones, using the simplest possible approach.
+---
+<strong>*Good news:*</strong>  as we use our right on being equal on peace and trust making, and express & acknowledge that for one another explicitly, we are somehow, already fulfilling UN Sustainable Development Goals [5](https://sdgs.un.org/goals/goal5),[10](https://sdgs.un.org/goals/goal10), [16](https://sdgs.un.org/goals/goal16) and [17](https://sdgs.un.org/goals/goal17), before moving to virtual spaces of +Impact generating projects that are going to be full of educational sessions, and collaboration around co-imagination, ideation, making and funding of projects with partners, grants and investments.
+
+----
+
+
+The collaboration spaces of Circles for Impact are been co-imagined and designed to exist as [metaverse-like virtual environments](https://www.youtube.com/watch?v=Ek7AvWng7J8), for impact generating and scaling learnings and cooperations around making of [Inner Development Goals](https://www.innerdevelopmentgoals.org/) and [United Nations Sustainable Development Goals](https://sdgs.un.org/) centric projects, with communication, coordination, collaboration and resolution tools and more to bring in. It's all there, we're just focusing existing technology, and for the new ones, using the simplest possible approach.
 <!-- 
 For example, check these smart contracts. They are the easiest contracts one can write, and they are derived from simple storage contracts. Only storing one struct. 
 
@@ -78,9 +122,9 @@ along with finalising resolutions in a [Liquid Democracy](https://en.wikipedia.o
 
 What's next?
 --
-What we want, before 2022 ending is wrapping up the token research and engineering for incentive tokens @ [Optimistic Flow of Peace](https://expressionsofpeace.org/an-optimistic-flow-of-peace.png). 
+What we want, before 2022 ending is wrapping up the token research and engineering for incentive tokens @ [Flow of Peace V2](https://miro.com/app/board/uXjVOX94E5k=/?share_link_id=267054985896). 
 
-And as of 2023, a Decentralized Exchange will be initiated for those incentive tokens and for Circles for Impact, and a set of crypto tokens of abstract type $cause will be defined and minted, for the actual funding of those projects. (eg. $food $education $air $water ..)
+And as of 2023, a Decentralized Exchange will be initiated for those incentive tokens and for Circles for Impact, and along with the initial utility and appreciation tokens ($peace and $wisdom), an initial set of investment tokens of $cause(s) will be defined and minted, for the actual funding of +impact projects. (eg. $food $education $air $water ..)
 
  They could have been only one token, called $impact, but what we want is not that. We'd like to observe this diversity of challenges, and of course, see how needs interrelate and that being kept as measurable as possible. 
 
