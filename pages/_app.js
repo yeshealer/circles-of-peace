@@ -102,10 +102,10 @@ function App({ Component, pageProps }) {
   return(
     <>
       <Head>
-          <title key="title">Circles of Peace</title>
-          <meta name="description" content="Peace, is a start: Circles of Peace, as a gateway to Circles for +Impact." key="description"></meta>
-          <meta property="og:title" content="Circles of Peace" key="og_title" />
-          <meta property="og:description" content="Peace, is a start: Circles of Peace, as a gateway to Circles for +Impact." key="og_description"/>
+          <title key="title">Circles of Peace for +Impact</title>
+          <meta name="description" content="Peace, is a start: Circles of Peace for +Impact, is a gateway to individually and collectively imaginable and achievable, Inner and Sustainable Development Goals" key="description"></meta>
+          <meta property="og:title" content="Circles of Peace for +Impact" key="og_title" />
+          <meta property="og:description" content="Peace, is a start: Circles of Peace for +Impact, is a gateway to individually and collectively imaginable and achievable, Inner and Sustainable Development Goals" key="og_description"/>
           <meta name="twitter:site" content="@demoversal" />
           <meta name="twitter:card" content="app" />
           <link rel="icon" href="/favicon.png" />

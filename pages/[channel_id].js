@@ -46,10 +46,10 @@ export default function ChannelDetails() {
   return (
     <>
       <Head>
-          <title key="title">Peacemakers | Group details</title>
+          <title key="title">Peacemakers</title>
           <meta name="description" content="Orbis is a fully decentralized social layer for the internet that any developers can use to build their own social apps or features." key="description"></meta>
           <meta property="og:title" content={"Peacemakers | Group details"} key="og_title" />
-          <meta property="og:description" content="Peace, is a start: Circles of Peace, as a gateway to Circles for +Impact."/>
+          <meta property="og:description" content="Peace, is a start: Circles of Peace for +Impact, is a gateway to individually and collectively imaginable and achievable, Inner and Sustainable Development Goals"/>
           <meta name="twitter:site" content="@demoVersal" />
           <meta property="og:image" content="/img/og_image.png" />
           <meta name="twitter:card" content="app" />
