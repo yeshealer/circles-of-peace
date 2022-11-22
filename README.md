@@ -1,30 +1,30 @@
-## Circles of Peace for +Impact 
-## aka. ~ Circles for +Impact
-In the main project, [demoVerse](https://demoVer.se), and focused one, 
-
-[A World Peace](https://aworldpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, for the social layer of peace and trust-making; as resilience and transparency being on top priority for our efforts, all along.
-
-In the meantime, launched as of 5th of November, we have started [Expressions of Demand](https://expressionsofdemand.org) to boost this decentralised diplomacy movement with a political dimension brought into place: 
-
-*A proactive electorship, with civic sanctions. That will be part of Circles of Impact and peacemakers will be able to include them as an attachments to their Expressions of Peace.*
-
-Between August to October 2022, we have made way through a proof of concept decentralised app/ DApp, [Expressions of Peace](https://expressionsofpeace.org), and people from several countries have experienced how fun and easy peace and trustmaking can be.
-
-Circles of Peace for +Impact* , is being built on top of the [Orbis SDK](https://orbis.club/developers) and its use case, [Orbis groups](https://app.orbis.club) this very repository is forked. 
-
-With these infrastructure, developers can use to create decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
-
-
+## Circles of Peace for +Impact ~ aka. Circles for +Impact.
 ## Peace, as a start:
 
-Peacemakers that have expressed and acknowledged peace through Circles of Peace for +Impact, and given that assurance, will be invited to metaverse-like virtual spaces, eg. welo.space and gather.town is considered to start with.
+This platform, Circles for Impact, is a place to come together and give the least assurance to the rest of the world, as citizens or as-is, by default, as world residents.
 
-In these spaces, we'll be observing people, as sovereign individuals, taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, as that's being decentralised, for the 21st century.
+Experience and features of this platform is quite similar to Twitter.
+
+Through expressions, acknowledgements, reflections and later attestations of peace, we'd like to interpret basic social media interactions for an initial set of peace and trust making activities. 
+
+![Interpretation of social media interactions for peacemaking](https://i.imgur.com/U8qgEdP.png)
+
+Peacemakers that have expressed and acknowledged peace through Circles of +Impact, and given that assurance, will be invited to virtual collaboration spaces, eg. workadventu,re, welo.space and gather.town to start with. 
+
+In these environment, we'll be observing people, as sovereign individuals, that taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, which is here being decentralised, for the 21st century.
+
+On that sense, platform will be acting as a (mental) gateway for collaboration, that manifests this worldview: 
+
+**first make peace, then collaborate.**
 
 ---
+
 @ Circles for Impact, we will not have moderation or censorship, nor a centralised data store. 
 
-All data for expressions, acknowledgements and reflections of peace will be publicly available and immutable/non-changeable through a decentralised data store, called [Ceramic Network](https://ceramic.network/), which is the data persistence layer Orbis Protocol is using under the hood.
+As is, all it takes to get into the platform is having a [metamask wallet](https://ceramic.network/) installed on your web browser. Interactions on this web3 social media will not cost or require signing your messages all the time. 
+
+
+All data for Expressions and Reflections of Peace will be publicly available and immutable/non-changeable through a decentralised data store, called [Ceramic Network](https://ceramic.network/), which is the data persistence layer Orbis Protocol is using under the hood.
 
 ```
 {
@@ -47,17 +47,15 @@ For instance, for a post made there, you can follow the green icon and
 
 
 ---
-Through expressions, acknowledgements, reflections and later attestations of peace, we'd like to interpret basic social media interactions for an initial set of peace and trust making activities. 
 
 
 
-![Interpretation of social media interactions for peacemaking](https://i.imgur.com/U8qgEdP.png)
+
 
 
 For that purpose, we are preparing an initial draft for a terms of use, and certificates/documents to be generated on-demand, eg.in the forms of [Non-fungible Tokens / NFTs](https://en.wikipedia.org/wiki/Non-fungible_token) and those certificates, when listed (to sell or display-only) will be part of the Library of Peace, an NFT marketplace as what's done here is an Art of Peace.
 
 
-This platform, Circles of Peace for +Impact, aka. Circles for Impact, is a gateway to come together and give the least assurance to the rest of the world, as citizens or as-is, by default as world residents.
 
 
 <!-- We will be sending $peace and $wisdom tokens and one of  official/platform NFTs dedicated by artists in our existing community on discord, for you to access to Peacemakers community on orbis.club // there you will be invited to Circles for Impact, right away.
@@ -66,26 +64,25 @@ This platform, Circles of Peace for +Impact, aka. Circles for Impact, is a gatew
 <!-- ![tokenGating@orbis](https://i.imgur.com/JL6PZJm.png)
  -->
 ---
-<strong> *SDG#5:*</strong> Gender Equality: As of 19 September 2022, only 13 women are in executive government positions as leaders of their countries/states.
+<strong> *SDG#5: Gender Equality:*</strong> As of 19 September 2022, only 13 women are in executive government positions as leaders of their countries/states.
 
 Considering 193 member states in the United Nations, women in executive positions are represented as low as 6-7%, and that, sadly, also goes for the official peacemaking/sealing activities of course.
 
 So that goes almost 50%/50% between genders with that egalitarian way, without having to wait more years on women's inclusion as them, official entitled to be the signers of a World Peace treaty.
 
-<strong> *SDG#10:*</strong> Reduced inequalities within and among countries: In our case, it's also among people.
-
-![Circles4Impact @ welo.space](https://i.imgur.com/z3YrWbM.png)
+<strong> *SDG#10: Reduced inequalities within and among countries:*</strong>  In our case, it's also among people.
 
 
->> "Everyone is free to be proactive, claim their equality and free will to act on peace and trust making; and be legitimate co-signer and sealer of a World Peace treaty, regardless of their entitlement, being official or not."
+
+>> "Everyone is free to be proactive, claim their equality, and use their free will to participate in a World Peace treaty, and be a legitimate co-signer of it, regardless of their entitlement, being official or not."
 
 ^ This human right, concept, perspective and notion shall be a canvas; on which our kind making Art of Peace, together. 
 
 
-<strong>*SDG#16:*</strong> Peace, justice and strong institutions >> we'd like to empower United Nations and all the states to build and boost civic capacity for such goals and causes. 
+<strong>*SDG#16: Peace, justice and strong institutions*</strong>  We'd like to empower United Nations and all the states to build and boost civic capacity for peace and all goals and causes. All interconnected. 
 
 
-<strong>*SDG#17:*</strong> Partnerships for the goals (this should be clear by now.)
+<strong>*SDG#17: Partnerships for the goals: *</strong>  This should be clear by now.
 
 So that's the consensus we got there,as in a common sense and understanding as well a high level of generosity and intentionality. Well, internationality as well :)
 
@@ -135,6 +132,23 @@ And as of 2023, a Decentralized Exchange will be initiated for those incentive t
  What matters is that we all catalyze a world peace, and live and leave a priceless legacy, that is more about being, than having. 
 
  By and for all.
+ 
+ ---
+ 
+ In the main project, [demoVerse](https://demoVer.se), and focused one, 
+
+[A World Peace](https://aworldpeace.org),  we'll be incorporating and collaborating with Orbis Protocol, for the social layer of peace and trust-making; as resilience and transparency being on top priority for our efforts, all along.
+
+In the meantime, launched as of 5th of November, we have started [Expressions of Demand](https://expressionsofdemand.org) to boost this decentralised diplomacy movement with a political dimension brought into place: 
+
+*A proactive electorship, with civic sanctions. That will be part of Circles of Impact and peacemakers will be able to include them as an attachments to their Expressions of Peace.*
+
+Between August to October 2022, we have made way through a proof of concept decentralised app/ DApp, [Expressions of Peace](https://expressionsofpeace.org), and people from several countries have experienced how fun and easy peace and trustmaking can be.
+
+Circles of Peace for +Impact* , is being built on top of the [Orbis SDK](https://orbis.club/developers) and its use case, [Orbis groups](https://app.orbis.club) this very repository is forked. 
+
+With these infrastructure, developers can use to create decentralized and composable social applications and features very easily. The SDK documentation can be accessed [here](https://orbis.club/developers). 
+
 
 
 
