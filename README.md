@@ -1,15 +1,17 @@
 ## Circles of Peace for +Impact ~ aka. Circles for +Impact.
 ## Peace, as a start:
 
-This platform, Circles for Impact, is a place to come together and give the least assurance to the rest of the world, as citizens or as-is, by default, as world residents.
+This platform, [Circles for Impact](https://circlesforimpact.org), is a place to come together and give the least assurance to the rest of the world, as citizens or as-is, by default, as world residents.
 
-Experience and features of this platform is quite similar to Twitter.
+Experience and features of this platform is quite similar to Twitter. We ere using the group module of [Orbis Protocol](https://orbis.club), an open sourced social tools and solutions provider. 
+
+This is a hybrid solution, including components both in web2 and web3.
 
 Through expressions, acknowledgements, reflections and later attestations of peace, we'd like to interpret basic social media interactions for an initial set of peace and trust making activities. 
 
 ![Interpretation of social media interactions for peacemaking](https://i.imgur.com/U8qgEdP.png)
 
-Peacemakers that have expressed and acknowledged peace through Circles of +Impact, and given that assurance, will be invited to virtual collaboration spaces, eg. workadventu,re, welo.space and gather.town to start with. 
+Peacemakers that have expressed and acknowledged peace through Circles of +Impact, and given that assurance, will be invited to virtual collaboration spaces based on causes they want to imagine and build solutions together, and get funded., eg. workadventu,re, welo.space and gather.town to start with. 
 
 In these environment, we'll be observing people, as sovereign individuals, that taken the least effort on being equal on peace and trust making, via a mimicry of peace-oriented diplomacy, which is here being decentralised, for the 21st century.
 
