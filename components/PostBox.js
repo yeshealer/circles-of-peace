@@ -317,14 +317,14 @@ export function PostBox({ type = "feed", action = "share-post", editedPost = nul
   }
 
   /** User doesn't have any activity on a blockchain */
-  if(user.nonces && user.nonces?.global <= 0 && user.a_r <= 1) {
-    return (
-      <div className="no-blockchain-activity">
-        <img src="/img/icons/eye-crossed-yellow.png" height="18" />
-        <p>It looks like you are joining from an inactive wallet so your posts might not be visible for other users for now. We recommend joining with an active wallet.</p>
-      </div>
-    )
-  }
+  // if(user.nonces && user.nonces?.global <= 0 && user.a_r <= 1) {
+  //   return (
+  //     <div className="no-blockchain-activity">
+  //       <img src="/img/icons/eye-crossed-yellow.png" height="18" />
+  //       <p>It looks like you are joining from an inactive wallet so your posts might not be visible for other users for now. We recommend joining with an active wallet.</p>
+  //     </div>
+  //   )
+  // }
 
   if(encryptionRules && user.hasLit == false) {
     return(
