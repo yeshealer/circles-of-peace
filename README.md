@@ -26,7 +26,7 @@ On that sense, platform will be acting as a (mental) gateway for collaboration, 
 As is, all it takes to get into the platform is having a [metamask wallet](https://ceramic.network/) installed on your web browser. Interactions on this web3 social media will not cost or require signing your messages all the time. 
 
 
-All data for Expressions and Reflections of Peace will be publicly available and immutable/non-changeable through a decentralised data store, called [Ceramic Network](https://ceramic.network/), which is the data persistence layer Orbis Protocol is using under the hood.
+All data for Expressions and Reflections of Peace will be publicly available through a decentralised data store, called [Ceramic Network](https://ceramic.network/), which is the data persistence layer Orbis Protocol is using under the hood.
 
 ```
 {
