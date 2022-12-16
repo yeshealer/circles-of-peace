@@ -127,9 +127,9 @@ export function GroupDetails() {
             <div className="group-channels">
               {/** Show home channel */}
               <MenuItemLevel2
-                title="home"
-                image="/img/icons/group-home-grey.png"
-                imageActive="/img/icons/group-home-white.png"
+                title="# mainstream"
+                // image="/img/icons/group-home-grey.png"
+                // imageActive="/img/icons/group-home-white.png"
                 route={"/"}
                 active={!channel_id ? true : false} />
 

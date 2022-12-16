@@ -38,7 +38,6 @@ export function Navigation() {
       {/** Show current group details */}
       <div className="navigation-level-2-container">
         <div className="navigation-level-2">
-          <div className="item-group-label">GROUP DETAILS</div>
           <div className="group-menu">
             <GroupDetails />
           </div>
