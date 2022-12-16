@@ -53,7 +53,7 @@ export function GroupDetails() {
 
     if(group.content.pfp || group.content.metadata?.pfp) {
       if(group.content.pfp) {
-        return <img src="https://expressionsofpeace.org/colorful-peace.png" className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
+        return <img src="img/colorful-peace.png" className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
 
         // return <img src={group.content.pfp} className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
       }
