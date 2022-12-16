@@ -93,7 +93,7 @@ export function GroupDetails() {
 
                 {/** Only display description if available */}
                 {group.content.description &&
-                  <p className="mbottom-0">GenerationPeace! How would you imagine, express, acknowledge and make a World Peace, in the 21st century?</p>
+                  <p className="mbottom-0">GenerationPeace! <br></br> How would you imagine, express and make <br></br> a World Peace?</p>
                 }
                 {group.content.metadata?.description &&
                   <p className="mbottom-0">{group.content.metadata?.description}</p>

@@ -87,6 +87,13 @@ p.primary, span.primary, ul.primary li {
 p.secondary, span.secondary, label.secondary, ul.secondary li {
   color: var(--color-text-secondary);
 }
+
+p.express-yourself{
+  /* color: var(--color-text-secondary); */
+  font-size: 1.4rem;
+}
+
+
 p.tertiary, span.tertiary, label.tertiary, ul.tertiary li {
   color: var(--color-text-tertiary);
 }
