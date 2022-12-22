@@ -9,6 +9,9 @@ import { GroupDetails } from "./GroupDetails";
 import { GlobalContext, ModalsContext } from "../contexts/GlobalContext";
 import OfferCause from "./OfferCause";
 
+/** Import Voting */
+import { Voting } from "./Voting";
+
 /** Global component for the left navigation */
 export function Navigation() {
   const { user, groups } = useContext(GlobalContext);
@@ -24,8 +27,8 @@ export function Navigation() {
       <div className={"causes-container"}>
         <div className={"causes-content"}>
           <img src="img/colorful-peace.png"></img>
-         
-         <OfferCause/>
+
+          <OfferCause />
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sustainable_Development_Goal_01NoPoverty.svg/300px-Sustainable_Development_Goal_01NoPoverty.svg.png"></img>
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Sustainable_Development_Goal_02ZeroHunger.svg/220px-Sustainable_Development_Goal_02ZeroHunger.svg.png"></img>
 
@@ -42,6 +45,9 @@ export function Navigation() {
             <GroupDetails />
           </div>
         </div>
+
+        {/* vocdoni voting */}
+        <Voting />
       </div>
     </div>
   );
