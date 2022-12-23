@@ -21,6 +21,7 @@ export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 export function Voting() {
   const [vocdoniSDK, setVocdoniSDK] = useState();
   const [members, setMembers] = useState([]);
+  const [lastElectionId, setLastElectionId] = useState();
   const [loading, setLoading] = useState(false);
   const { group_id, orbis } = useContext(GlobalContext);
   const wrapperRef = useRef(null);
@@ -96,8 +97,8 @@ export function Voting() {
     endDate.setHours(endDate.getHours() + 10);
 
     const election = Election.from({
-      title: "Election title",
-      description: "Election description",
+      title: "Impact Next",
+      description: "Peacemaker! If peace is a start, then what's next?",
       header: "https://source.unsplash.com/random",
       streamUri: "https://source.unsplash.com/random",
       endDate: endDate.getTime(),
@@ -105,17 +106,19 @@ export function Voting() {
       electionType: null,
     });
 
-    election.addQuestion("This is a title", "This is a description", [
-      {
-        title: "Option 1",
-        value: 0,
-      },
-      {
-        title: "Option 2",
-        value: 1,
-      },
-    ]);
-
+    election.addQuestion(
+      "Impact Next",
+      "What Sustainable Dev Goal would you prioritise?",
+      [
+        { title: "No Poverty", value: 0 },
+        { title: "Zero Hunger", value: 1 },
+        { title: "Good health and wellbeing", value: 2 },
+        { title: "Quality Education", value: 3 },
+        { title: "Gender Equality", value: 4 },
+        { title: "Clean water and sanitation", value: 5 },
+        { title: "Affordable and clean energy", value: 6 },
+      ]
+    );
     return election;
   };
 
@@ -151,6 +154,7 @@ export function Voting() {
                       const census = await createCensus();
                       /** Create election */
                       const election = await createElection(census);
+                      
                       const electionId = await vocdoniSDK.createElection(
                         election
                       );
@@ -158,6 +162,7 @@ export function Voting() {
                         "🚀 ~ file: Voting.js:149 ~ onClick={ ~ electionId",
                         electionId
                       );
+                      setLastElectionId(electionId); // also set electionId @ component state.
                       vocdoniSDK.setElectionId(electionId);
 
                       // wait for block get confirmed
@@ -178,16 +183,21 @@ export function Voting() {
                   onClick={async () => {
                     try {
                       setLoading(true);
-
+                        console.log("voting...")
                       vocdoniSDK.wallet = signer;
-                      const vote = new Vote([1]);
+                      console.log(`setting electionId ( ${lastElectionId} ) to client @ voting..`);
+                    vocdoniSDK.setElectionId(lastElectionId);
+                      const vote = new Vote([0,1]);
+                      console.log(`submitting vote ${vote}`);
 
                       const confirmationId = await vocdoniSDK.submitVote(vote);
+                      
                       console.log(
                         "🚀 ~ file: Voting.js:149 ~ <ButtononClick={ ~ confirmationId",
                         confirmationId
                       );
                     } catch (error) {
+                      console.log(error)
                     } finally {
                       setLoading(false);
                     }
@@ -195,6 +205,31 @@ export function Voting() {
                 >
                   Vote
                 </Button>
+
+                <Button
+                  fullWidth
+                  loading={loading}
+                  loaderPosition="center"
+                  onClick={async () => {
+                    try {
+                      setLoading(true);
+                      console.log("fetching voting process info..");
+                      const info = await vocdoniSDK.fetchElection(lastElectionId);
+                      console.log(info) // shows election information and metadata
+                      
+                    } catch (error) {
+                      
+                    }finally {
+                      setLoading(false);
+
+                    }
+                    
+                  }}
+                >
+                  Fetch results
+                </Button>
+
+
                 <Button fullWidth onClick={() => disconnect()}>
                   Disconnect
                 </Button>
