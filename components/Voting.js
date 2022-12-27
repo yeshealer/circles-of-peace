@@ -1,13 +1,18 @@
-import { useRouter } from "next/router";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 
-import { Button, Flex } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  Text,
+  Title,
+  Image,
+  Card,
+  Group,
+  Badge,
+} from "@mantine/core";
 import { getAddressFromDid } from "@orbisclub/orbis-sdk/utils";
-import { useAccount, useConnect, useDisconnect, useSigner } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import ClientOnly from "./ClientOnly";
-
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Election,
   EnvOptions,
@@ -15,16 +20,31 @@ import {
   VocdoniSDKClient,
   Vote,
 } from "@vocdoni/sdk";
+import { useAccount, useConnect, useDisconnect, useSigner } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import ClientOnly from "./ClientOnly";
+import ReactTimeAgo from "react-time-ago";
+
+const ActiveElectionId =
+  "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008";
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export function Voting() {
   const [vocdoniSDK, setVocdoniSDK] = useState();
   const [members, setMembers] = useState([]);
-  const [lastElectionId, setLastElectionId] = useState();
+  const [activeElectionInfo, setActiveElectionInfo] = useState();
+  const [lastElectionId, setLastElectionId] = useState(ActiveElectionId);
   const [loading, setLoading] = useState(false);
   const { group_id, orbis } = useContext(GlobalContext);
   const wrapperRef = useRef(null);
+  const { address, isConnected } = useAccount();
+  const { data: signer } = useSigner();
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect({
+      connector: new InjectedConnector(),
+    });
+  const { disconnect } = useDisconnect();
 
   /** get members */
   useMemo(() => {
@@ -52,14 +72,6 @@ export function Voting() {
   }
 
   /** get voter */
-  const { address, isConnected } = useAccount();
-  const { data: signer } = useSigner();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect({
-      connector: new InjectedConnector(),
-    });
-  const { disconnect } = useDisconnect();
-
   useEffect(() => {
     const setupVocdoni = async () => {
       if (signer) {
@@ -81,6 +93,18 @@ export function Voting() {
     };
     setupVocdoni();
   }, [signer]);
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const fetchElection = async () => {
+      if (signer && vocdoniSDK) {
+        const info = await vocdoniSDK.fetchElection(lastElectionId);
+        setActiveElectionInfo(info);
+      }
+    };
+    fetchElection();
+  }, [signer, vocdoniSDK]);
 
   // form to create census + add voters from orbis get joined
   const createCensus = async () => {
@@ -122,135 +146,238 @@ export function Voting() {
     return election;
   };
 
-  // vote button
+  const voteElection = async (value) => {
+    console.log("🚀 ~ file: Voting.js:150 ~ value", value);
+    try {
+      setLoading(true);
+      console.log("voting...");
+      vocdoniSDK.wallet = signer;
+      console.log(
+        `setting electionId ( ${lastElectionId} ) to client @ voting..`
+      );
+      vocdoniSDK.setElectionId(lastElectionId);
+      const vote = new Vote([value]);
+      console.log(`submitting vote ${vote}`);
 
-  // faucet
+      const confirmationId = await vocdoniSDK.submitVote(vote);
+
+      console.log(
+        "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
+        confirmationId
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ClientOnly>
-      <div className={"navigation-container"} ref={wrapperRef}>
-        <div>
-          <p>Voting</p>
-          {isConnected && (
-            <>
-              <p>Connected</p>
-              <Flex
-                mih={50}
-                gap="xs"
-                justify="center"
-                align="start"
-                direction="column"
-                wrap="wrap"
-              >
-                <Button
-                  fullWidth
-                  loading={loading}
-                  loaderPosition="center"
-                  onClick={async () => {
-                    try {
-                      setLoading(true);
+      <div className={"vote-container"} ref={wrapperRef}>
+        {activeElectionInfo && (
+          <Flex
+            mih={50}
+            gap="md"
+            justify="center"
+            align="center"
+            direction="column"
+            wrap="wrap"
+            w="full"
+          >
+            <Flex align={"center"} direction={"column"}>
+              <Title order={2}>{activeElectionInfo._title.default}</Title>
+              <Text fz="sm">id: {activeElectionInfo._id}</Text>
+            </Flex>
+            <Text fz="xl" weight={400}>
+              {activeElectionInfo._description.default}
+            </Text>
+            <Flex direction={"row"} gap={"md"}>
+              <Text fz="sm">
+                Started{" "}
+                <ReactTimeAgo
+                  date={activeElectionInfo._startDate}
+                  locale="en-US"
+                />
+              </Text>
+              <Text fz="sm">
+                Ends{" "}
+                <ReactTimeAgo
+                  date={activeElectionInfo._endDate}
+                  locale="en-US"
+                />
+              </Text>
+            </Flex>
+            <div
+              style={{ width: 540, marginLeft: "auto", marginRight: "auto" }}
+            >
+              <Image
+                radius="md"
+                src={activeElectionInfo._header}
+                alt="Random unsplash image"
+              />
+            </div>
+            <Flex direction={"column"}>
+              <Card shadow="sm" p="lg" radius="md" withBorder>
+                <Card.Section> </Card.Section>
+                <Group position="apart" mt="md" mb="xs">
+                  <Text weight={500}>Census</Text>
+                  <Badge color="pink" variant="light">
+                    Count: {activeElectionInfo._voteCount}
+                  </Badge>
+                </Group>
+                <Text fz="md">
+                  URI: {activeElectionInfo._census._censusURI}
+                </Text>
+                <Text fz="md">ID: {activeElectionInfo._census._censusId}</Text>
+              </Card>
+            </Flex>
+            {/* final result: {activeElectionInfo._finalResults} */}
+            <Flex direction={"column"} align="center">
+              <Title order={3}>
+                {activeElectionInfo._questions[0].title.default}
+              </Title>
+              <Text fz="lg">
+                {activeElectionInfo._questions[0].description.default}
+              </Text>
+            </Flex>
 
-                      /** Create census with addresses */
-                      const census = await createCensus();
-                      /** Create election */
-                      const election = await createElection(census);
-                      
-                      const electionId = await vocdoniSDK.createElection(
-                        election
-                      );
-                      console.log(
-                        "🚀 ~ file: Voting.js:149 ~ onClick={ ~ electionId",
-                        electionId
-                      );
-                      setLastElectionId(electionId); // also set electionId @ component state.
-                      vocdoniSDK.setElectionId(electionId);
-
-                      // wait for block get confirmed
-                      delay(14000);
-                    } catch (error) {
-                      console.error(error);
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
-                >
-                  Create Election
-                </Button>
-                <Button
-                  fullWidth
-                  loading={loading}
-                  loaderPosition="center"
-                  onClick={async () => {
-                    try {
-                      setLoading(true);
-                        console.log("voting...")
-                      vocdoniSDK.wallet = signer;
-                      console.log(`setting electionId ( ${lastElectionId} ) to client @ voting..`);
-                    vocdoniSDK.setElectionId(lastElectionId);
-                      const vote = new Vote([0,1]);
-                      console.log(`submitting vote ${vote}`);
-
-                      const confirmationId = await vocdoniSDK.submitVote(vote);
-                      
-                      console.log(
-                        "🚀 ~ file: Voting.js:149 ~ <ButtononClick={ ~ confirmationId",
-                        confirmationId
-                      );
-                    } catch (error) {
-                      console.log(error)
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
-                >
-                  Vote
-                </Button>
-
-                <Button
-                  fullWidth
-                  loading={loading}
-                  loaderPosition="center"
-                  onClick={async () => {
-                    try {
-                      setLoading(true);
-                      console.log("fetching voting process info..");
-                      const info = await vocdoniSDK.fetchElection(lastElectionId);
-                      console.log(info) // shows election information and metadata
-                      
-                    } catch (error) {
-                      
-                    }finally {
-                      setLoading(false);
-
-                    }
-                    
-                  }}
-                >
-                  Fetch results
-                </Button>
-
-
-                <Button fullWidth onClick={() => disconnect()}>
-                  Disconnect
-                </Button>
-              </Flex>
-            </>
-          )}
-
-          {!isConnected &&
-            connectors.map((connector) => (
-              <Button
-                disabled={!connector.ready}
-                key={connector.id}
-                onClick={() => connect({ connector })}
-              >
-                {connector.name}
-                {isLoading &&
-                  pendingConnector?.id === connector.id &&
-                  " (connecting)"}
-              </Button>
+            {activeElectionInfo._questions[0].choices.map((choice, index) => (
+              <>
+                <div style={{ width: 300 }}>
+                  {/* <Text fz="md">{choice.title.default}</Text> */}
+                  <Button
+                    color={"violet"}
+                    fullWidth
+                    loading={loading}
+                    loaderPosition="center"
+                    onClick={() => voteElection(choice.value)}
+                  >
+                    {choice.title.default}
+                  </Button>
+                </div>
+              </>
             ))}
-        </div>
+
+            {/* <Flex direction={"column"}>
+              <Card shadow="sm" p="lg" radius="md" withBorder>
+                <Card.Section> </Card.Section>
+                <Group position="apart" mt="md" mb="xs">
+                  <Text weight={500}>Answers</Text>
+                  {activeElectionInfo._results[0].map((result, index) => (
+                    <>
+                      <Text fz="md">
+                        Choice {index}: {result}
+                      </Text>
+                    </>
+                  ))}
+                </Group>
+              </Card>
+            </Flex> */}
+          </Flex>
+        )}
+        {isConnected && (
+          <>
+            <Flex
+              pt={50}
+              mih={50}
+              gap="xs"
+              justify="center"
+              align="start"
+              direction="column"
+              wrap="wrap"
+            >
+              <Button
+                color="gray"
+                fullWidth
+                loading={loading}
+                loaderPosition="center"
+                onClick={async () => {
+                  try {
+                    setLoading(true);
+
+                    /** Create census with addresses */
+                    const census = await createCensus();
+                    /** Create election */
+                    const election = await createElection(census);
+
+                    const electionId = await vocdoniSDK.createElection(
+                      election
+                    );
+                    console.log(
+                      "🚀 ~ file: Voting.js:149 ~ onClick={ ~ electionId",
+                      electionId
+                    );
+                    setLastElectionId(electionId); // also set electionId @ component state.
+                    vocdoniSDK.setElectionId(electionId);
+
+                    // wait for block get confirmed
+                    delay(14000);
+                  } catch (error) {
+                    console.error(error);
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+              >
+                Create Election
+              </Button>
+              {/* <Button
+                color="gray"
+                fullWidth
+                loading={loading}
+                loaderPosition="center"
+                onClick={async () => {
+                  try {
+                    setLoading(true);
+                    console.log("voting...");
+                    vocdoniSDK.wallet = signer;
+                    console.log(
+                      `setting electionId ( ${lastElectionId} ) to client @ voting..`
+                    );
+                    vocdoniSDK.setElectionId(lastElectionId);
+                    const vote = new Vote([0, 1]);
+                    console.log(`submitting vote ${vote}`);
+
+                    const confirmationId = await vocdoniSDK.submitVote(vote);
+
+                    console.log(
+                      "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
+                      confirmationId
+                    );
+                  } catch (error) {
+                    console.log(error);
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+              >
+                Vote
+              </Button> */}
+              {/* <Button
+                color="gray"
+                fullWidth
+                loading={loading}
+                loaderPosition="center"
+                onClick={async () => {
+                  try {
+                    setLoading(true);
+                    console.log("fetching voting process info..");
+                    const info = await vocdoniSDK.fetchElection(lastElectionId);
+                    console.log(info); // shows election information and metadata
+                  } catch (error) {
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+              >
+                Fetch results
+              </Button> */}
+            </Flex>
+          </>
+        )}
+
+        {!isConnected && <>Please connect your wallet</>}
       </div>
     </ClientOnly>
   );

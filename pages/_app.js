@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import "../styles/globals.css";
-import "../styles/utilities.css";
-import "../styles/responsive.css";
-import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import "../styles/globals.css";
+import styles from "../styles/Home.module.css";
+import "../styles/responsive.css";
+import "../styles/utilities.css";
 
 /** Import some Orbis modules */
-import { Navigation } from "../components/Navigation";
 import { CreateChannelModal } from "../components/modals/CreateChannel";
 import { UpdateChannelModal } from "../components/modals/UpdateChannel";
 import { UpdateGroupModal } from "../components/modals/UpdateGroup";
+import { Navigation } from "../components/Navigation";
 
 /** Import Context */
 import { GlobalContext, ModalsContext } from "../contexts/GlobalContext";
 
 /** Import Orbis SDK */
 import { Orbis } from "@orbisclub/orbis-sdk";
+
+import { MantineProvider } from "@mantine/core";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 /** Import TimeAgo globally */
 import TimeAgo from "javascript-time-ago";
@@ -29,8 +31,10 @@ en.long.minute = {
 TimeAgo.addDefaultLocale(en);
 
 /** Import Wagmi */
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
+import { configureChains, createClient, mainnet, WagmiConfig } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+
+const queryClient = new QueryClient();
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -141,52 +145,62 @@ function App({ Component, pageProps }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <WagmiConfig client={client}>
-        <GlobalContext.Provider value={{ user, setUser, group_id, orbis }}>
-          <ModalsContext.Provider value={{ setModalVis, navigationVis }}>
-            <div className={styles.container}>
-              {/** Show navigation on every pages */}
-              <Navigation />
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme: "dark",
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          <WagmiConfig client={client}>
+            <GlobalContext.Provider value={{ user, setUser, group_id, orbis }}>
+              <ModalsContext.Provider value={{ setModalVis, navigationVis }}>
+                <div className={styles.container}>
+                  {/** Show navigation on every pages */}
+                  <Navigation />
 
-              {/** Show page content */}
-              <Component {...pageProps} />
-            </div>
-          </ModalsContext.Provider>
+                  {/** Show page content */}
+                  <Component {...pageProps} />
+                </div>
+              </ModalsContext.Provider>
 
-          {/** Show modals component that should be available at the global level */}
-          <ModalsContext.Provider value={{ setModalVis }}>
-            {/** Modal to edit an existing group */}
-            {updateGroupModalVis && (
-              <UpdateGroupModal
-                visible={true}
-                setVisible={() => setModalVis("update-group", false)}
-                group={tempModalData}
-                callback={tempCallback}
-              />
-            )}
+              {/** Show modals component that should be available at the global level */}
+              <ModalsContext.Provider value={{ setModalVis }}>
+                {/** Modal to edit an existing group */}
+                {updateGroupModalVis && (
+                  <UpdateGroupModal
+                    visible={true}
+                    setVisible={() => setModalVis("update-group", false)}
+                    group={tempModalData}
+                    callback={tempCallback}
+                  />
+                )}
 
-            {/** Modal to create a new channel */}
-            {createChannelModalVisible && (
-              <CreateChannelModal
-                visible={true}
-                setVisible={() => setModalVis("create-channel", false)}
-                group={tempModalData}
-                callback={tempCallback}
-              />
-            )}
+                {/** Modal to create a new channel */}
+                {createChannelModalVisible && (
+                  <CreateChannelModal
+                    visible={true}
+                    setVisible={() => setModalVis("create-channel", false)}
+                    group={tempModalData}
+                    callback={tempCallback}
+                  />
+                )}
 
-            {/** Modal to update a new channel */}
-            {updateChannelModalVisible && (
-              <UpdateChannelModal
-                visible={true}
-                setVisible={() => setModalVis("update-channel", false)}
-                channel={tempModalData}
-                callback={tempCallback}
-              />
-            )}
-          </ModalsContext.Provider>
-        </GlobalContext.Provider>
-      </WagmiConfig>
+                {/** Modal to update a new channel */}
+                {updateChannelModalVisible && (
+                  <UpdateChannelModal
+                    visible={true}
+                    setVisible={() => setModalVis("update-channel", false)}
+                    channel={tempModalData}
+                    callback={tempCallback}
+                  />
+                )}
+              </ModalsContext.Provider>
+            </GlobalContext.Provider>
+          </WagmiConfig>
+        </QueryClientProvider>
+      </MantineProvider>
     </>
   );
 }

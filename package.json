@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
     "@ethersproject/abi": "^5.7.0",
-    "@mantine/core": "^5.9.4",
-    "@mantine/hooks": "^5.9.4",
+    "@mantine/core": "^5.9.5",
+    "@mantine/hooks": "^5.9.5",
+    "@mantine/next": "^5.9.5",
     "@orbisclub/orbis-sdk": "^0.3.82",
+    "@tanstack/react-query": "^4.20.4",
     "@vocdoni/sdk": "^0.0.2-alpha",
     "@walletconnect/web3-provider": "^1.7.8",
     "arweave": "^1.11.4",
