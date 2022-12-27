@@ -38,15 +38,14 @@ export function Navigation() {
       <div className={"navigation-container"} ref={wrapperRef}>
         <div className={"causes-container"}>
           <div className={"causes-content"}>
-            <img src="img/colorful-peace.png"></img>
+            <Link href={"/"}>
+              <img src="img/colorful-peace.png"></img>
+            </Link>
 
-            <OfferCause />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sustainable_Development_Goal_01NoPoverty.svg/300px-Sustainable_Development_Goal_01NoPoverty.svg.png"></img>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Sustainable_Development_Goal_02ZeroHunger.svg/220px-Sustainable_Development_Goal_02ZeroHunger.svg.png"></img>
-
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sustainable_Development_Goal_13.png/300px-Sustainable_Development_Goal_13.png"></img>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sustainable_Development_Goal_5.png/300px-Sustainable_Development_Goal_5.png"></img>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sustainable_Development_Goal_17Partnerships.svg/220px-Sustainable_Development_Goal_17Partnerships.svg.png"></img>
+            <Link href={"/vote"}>
+              <img src="img/icons/question-mark.png" width={"62px"}></img>
+            </Link>
+           
           </div>
         </div>
 
@@ -60,31 +59,30 @@ export function Navigation() {
 
           {/* vocdoni voting */}
           <Space h="md" />
-          <Link href={"/vote"}>
-            <NavLink label="Vote" color="violet" icon={<Cube />} />
-          </Link>
-          <Space h="md" />
-          {isConnected ? (
-            <Button color="red" fullWidth onClick={() => disconnect()}>
-              Disconnect
-            </Button>
-          ) : (
-            <>
-              {connectors.map((connector) => (
-                <Button
-                  color="gray"
-                  disabled={!connector.ready}
-                  key={connector.id}
-                  onClick={() => connect({ connector })}
-                >
-                  {!isLoading && "Connect to " + connector.name}
-                  {isLoading &&
-                    pendingConnector?.id === connector.id &&
-                    " (connecting)"}
-                </Button>
-              ))}
-            </>
-          )}
+          <div style={{ backgroundColor: "black" }}>
+            <Space h="md" />
+            {isConnected ? (
+              <Button color="red" fullWidth onClick={() => disconnect()}>
+                Disconnect
+              </Button>
+            ) : (
+              <>
+                {connectors.map((connector) => (
+                  <Button
+                    color="gray"
+                    disabled={!connector.ready}
+                    key={connector.id}
+                    onClick={() => connect({ connector })}
+                  >
+                    {!isLoading && "Connect to " + connector.name}
+                    {isLoading &&
+                      pendingConnector?.id === connector.id &&
+                      " (connecting)"}
+                  </Button>
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </ClientOnly>

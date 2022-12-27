@@ -123,7 +123,7 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title key="title">Circles of Peace for +Impact</title>
+        <title key="title">Circles for Impact</title>
         <meta
           name="description"
           content="Peace, is a start: Circles of Peace for +Impact, is a gateway to individually and collectively imaginable and achievable, Inner and Sustainable Development Goals"

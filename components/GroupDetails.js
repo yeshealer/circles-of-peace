@@ -156,19 +156,28 @@ function LoopChannels({channels}) {
   const router = useRouter();
   const { channel_id } = router.query;
 
-  return channels.map((channel, key) => {
-    if(channel.content) {
+  // for now only list first channel
       return (
-        <MenuItemLevel2
-        key={key}
-          title={channel.content.name}
-          image={getChannelIcon(channel, false)}
-          imageActive={getChannelIcon(channel, true)}
-          route={"/" + channel.stream_id}
-          active={channel_id == channel.stream_id ? true : false} />
-      )
-    } else {
-      return null;
-    }
-  });
+          <MenuItemLevel2
+          key={channels[0].stream_id}
+            title={channels[0].content.name}
+            image={getChannelIcon(channels[0], false)}
+            imageActive={getChannelIcon(channels[0], true)}
+            route={"/" + channels[0].stream_id}
+            active={channel_id == channels[0].stream_id ? true : false} />);
+  // return channels.map((channel, key) => {
+  //   if(channel.content) {
+  //     return (
+  //       <MenuItemLevel2
+  //       key={key}
+  //         title={channel.content.name}
+  //         image={getChannelIcon(channel, false)}
+  //         imageActive={getChannelIcon(channel, true)}
+  //         route={"/" + channel.stream_id}
+  //         active={channel_id == channel.stream_id ? true : false} />
+  //     )
+  //   } else {
+  //     return null;
+  //   }
+  // });
 }

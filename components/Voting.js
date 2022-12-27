@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
-
+import VotingStats from "./VotingStats";
 import {
   Button,
   Flex,
@@ -10,6 +10,7 @@ import {
   Card,
   Group,
   Badge,
+  SimpleGrid,
 } from "@mantine/core";
 import { getAddressFromDid } from "@orbisclub/orbis-sdk/utils";
 import { useQueryClient } from "@tanstack/react-query";
@@ -24,12 +25,13 @@ import { useAccount, useConnect, useDisconnect, useSigner } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import ClientOnly from "./ClientOnly";
 import ReactTimeAgo from "react-time-ago";
+import Causes from "./Causes";
 
 const ActiveElectionId =
   "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008";
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
+const causes = Causes();
 export function Voting() {
   const [vocdoniSDK, setVocdoniSDK] = useState();
   const [members, setMembers] = useState([]);
@@ -40,6 +42,7 @@ export function Voting() {
   const wrapperRef = useRef(null);
   const { address, isConnected } = useAccount();
   const { data: signer } = useSigner();
+  const [isAdmin, setIsAdmin] = useState(false);
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect({
       connector: new InjectedConnector(),
@@ -93,6 +96,14 @@ export function Voting() {
     };
     setupVocdoni();
   }, [signer]);
+
+  useEffect(() => {
+    if (address == "0xEd2eF70e8B1EBf95bDfD7ba692454143b2A8263B") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, []);
 
   const queryClient = useQueryClient();
 
@@ -174,6 +185,13 @@ export function Voting() {
 
   return (
     <ClientOnly>
+      {!isConnected && (
+        <Text size={"xl"}>
+          After joining to Peacemakers, please connect your wallet to be part of
+          the election
+        </Text>
+      )}
+
       <div className={"vote-container"} ref={wrapperRef}>
         {activeElectionInfo && (
           <Flex
@@ -185,79 +203,100 @@ export function Voting() {
             wrap="wrap"
             w="full"
           >
-            <Flex align={"center"} direction={"column"}>
+            {/* <Flex align={"center"} direction={"column"}>
               <Title order={2}>{activeElectionInfo._title.default}</Title>
               <Text fz="sm">id: {activeElectionInfo._id}</Text>
             </Flex>
             <Text fz="xl" weight={400}>
               {activeElectionInfo._description.default}
-            </Text>
-            <Flex direction={"row"} gap={"md"}>
-              <Text fz="sm">
-                Started{" "}
-                <ReactTimeAgo
-                  date={activeElectionInfo._startDate}
-                  locale="en-US"
-                />
-              </Text>
-              <Text fz="sm">
-                Ends{" "}
-                <ReactTimeAgo
-                  date={activeElectionInfo._endDate}
-                  locale="en-US"
-                />
-              </Text>
-            </Flex>
+            </Text> */}
+
             <div
               style={{ width: 540, marginLeft: "auto", marginRight: "auto" }}
             >
-              <Image
+              {/* <Image
                 radius="md"
                 src={activeElectionInfo._header}
                 alt="Random unsplash image"
-              />
+              /> */}
             </div>
             <Flex direction={"column"}>
-              <Card shadow="sm" p="lg" radius="md" withBorder>
-                <Card.Section> </Card.Section>
-                <Group position="apart" mt="md" mb="xs">
-                  <Text weight={500}>Census</Text>
-                  <Badge color="pink" variant="light">
-                    Count: {activeElectionInfo._voteCount}
-                  </Badge>
-                </Group>
-                <Text fz="md">
+              {/* <Card shadow="sm" p="lg" radius="md" withBorder> */}
+              {/* <Card.Section> </Card.Section> */}
+              {/* <Text fz="md">
                   URI: {activeElectionInfo._census._censusURI}
                 </Text>
-                <Text fz="md">ID: {activeElectionInfo._census._censusId}</Text>
-              </Card>
+                <Text fz="md">ID: {activeElectionInfo._census._censusId}</Text> */}
+              {/* </Card> */}
             </Flex>
             {/* final result: {activeElectionInfo._finalResults} */}
             <Flex direction={"column"} align="center">
-              <Title order={3}>
-                {activeElectionInfo._questions[0].title.default}
-              </Title>
-              <Text fz="lg">
-                {activeElectionInfo._questions[0].description.default}
-              </Text>
-            </Flex>
+              <Card shadow="sm" p="lg" radius="md" withBorder>
+                <Title order={3}>
+                  {activeElectionInfo._questions[0].title.default}
+                </Title>
+                <Text fz="lg">
+                  {activeElectionInfo._questions[0].description.default}
+                </Text>
+                <Group position="apart" mt="md" mb="xs">
+                  {/* <Text weight={500}>Census</Text> */}
+                  <Badge color="dark" variant="light" size="xl">
+                    Total vote: {activeElectionInfo._voteCount}
+                  </Badge>
+                </Group>
+                <Flex direction={"row"} gap={"md"}>
+                  <Text fz="sm">
+                    Started{" "}
+                    <ReactTimeAgo
+                      date={activeElectionInfo._startDate}
+                      locale="en-US"
+                    />
+                  </Text>
 
-            {activeElectionInfo._questions[0].choices.map((choice, index) => (
-              <>
-                <div style={{ width: 300 }}>
-                  {/* <Text fz="md">{choice.title.default}</Text> */}
-                  <Button
-                    color={"violet"}
-                    fullWidth
-                    loading={loading}
-                    loaderPosition="center"
-                    onClick={() => voteElection(choice.value)}
-                  >
-                    {choice.title.default}
-                  </Button>
-                </div>
-              </>
-            ))}
+                  <Text fz="sm">
+                    Ends{" "}
+                    <ReactTimeAgo
+                      date={activeElectionInfo._endDate}
+                      locale="en-US"
+                    />
+                  </Text>
+                </Flex>
+              </Card>
+            </Flex>
+            <div style={{ backgroundColor: "gray" }}>
+              <VotingStats
+                causes={activeElectionInfo._questions[0].choices}
+                results={activeElectionInfo.results[0]}
+              />
+            </div>
+            <SimpleGrid size="xxl" cols={4}>
+              {isConnected &&
+                activeElectionInfo._questions[0].choices.map(
+                  (choice, index) => (
+                    <>
+                      <div>
+                        {/* <Text fz="md">{choice.title.default}</Text> */}
+                        {/* <Button
+                      color={"violet"}
+                      fullWidth
+                      loading={loading}
+                      loaderPosition="center"
+                      onClick={() => voteElection(choice.value)}
+                    > */}
+                        {/* {choice.title.default} */}
+                        <img
+                          width={140}
+                          height={140}
+                          src={causes[choice.value + 1].imgUrl}
+                          onClick={() => voteElection(choice.value)}
+                          style={{ borderRadius: "20%" }}
+                        ></img>
+                        {/* </Button> */}
+                      </div>
+                    </>
+                  )
+                )}
+            </SimpleGrid>
 
             {/* <Flex direction={"column"}>
               <Card shadow="sm" p="lg" radius="md" withBorder>
@@ -276,7 +315,7 @@ export function Voting() {
             </Flex> */}
           </Flex>
         )}
-        {isConnected && (
+        {isConnected && isAdmin && (
           <>
             <Flex
               pt={50}
@@ -289,7 +328,9 @@ export function Voting() {
             >
               <Button
                 color="gray"
-                fullWidth
+                // fullWidth
+                marginLeft="20"
+                marginRight="20"
                 loading={loading}
                 loaderPosition="center"
                 onClick={async () => {
@@ -376,8 +417,6 @@ export function Voting() {
             </Flex>
           </>
         )}
-
-        {!isConnected && <>Please connect your wallet</>}
       </div>
     </ClientOnly>
   );

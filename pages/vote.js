@@ -39,11 +39,9 @@ export default function GroupHome() {
             {/** Show channel details */}
             <div className="channel-details flex-column v-justify-content-center mbottom-15">
               <div style={{ cursor: "pointer" }} onClick={() => router.back()}>
-                Back
+              {"<< "} back
               </div>
-              <p className="secondary m-0 mtop-8 express-yourself">
-                Express yourself!
-              </p>
+            
             </div>
 
             {/** Show voting feed */}
