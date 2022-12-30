@@ -13,7 +13,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { getAddressFromDid } from "@orbisclub/orbis-sdk/utils";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import {
   Election,
   EnvOptions,
@@ -26,6 +26,9 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import ClientOnly from "./ClientOnly";
 import ReactTimeAgo from "react-time-ago";
 import Causes from "./Causes";
+import { Feed } from "../components/Feed";
+import { Post } from "./post/";
+import { PostBox } from "./PostBox";
 
 const ActiveElectionId =
   "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008";
@@ -43,11 +46,7 @@ export function Voting() {
   const { address, isConnected } = useAccount();
   const { data: signer } = useSigner();
   const [isAdmin, setIsAdmin] = useState(false);
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect({
-      connector: new InjectedConnector(),
-    });
-  const { disconnect } = useDisconnect();
+  const [comment, setComment] = useState();
 
   /** get members */
   useMemo(() => {
@@ -56,6 +55,29 @@ export function Voting() {
       loadMembers();
     }
   }, [group_id]);
+
+  const {
+    data: comments,
+    isLoading: isLoadingComments,
+    refetch: refetchComments,
+  } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () =>
+      await orbis
+        .getPosts({
+          context: ActiveElectionId,
+        })
+        .then((res) => res.data),
+  });
+  console.log("🚀 ~ file: Voting.js:70 ~ comments", comments);
+
+  const mutation = useMutation({
+    mutationFn: async ({ comment }) =>
+      await orbis.createPost({
+        body: comment,
+        context: ActiveElectionId,
+      }),
+  });
 
   async function loadMembers() {
     let { data, error, status } = await orbis.getGroupMembers(group_id);
@@ -104,8 +126,6 @@ export function Voting() {
       setIsAdmin(false);
     }
   }, []);
-
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchElection = async () => {
@@ -181,6 +201,20 @@ export function Voting() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const commentVoting = async () => {
+    console.log("comment: ", comment);
+    mutation.mutate(
+      { comment },
+      {
+        onSuccess: (data, variables, context) => {
+          refetchComments();
+          console.log("onSuccess: ", data);
+          alert("Your comment is successfully submitted");
+        },
+      }
+    );
   };
 
   return (
@@ -263,12 +297,12 @@ export function Voting() {
                 </Flex>
               </Card>
             </Flex>
-            <div style={{ backgroundColor: "gray" }}>
+            {/* <div style={{ backgroundColor: "gray" }}>
               <VotingStats
                 causes={activeElectionInfo._questions[0].choices}
                 results={activeElectionInfo.results[0]}
               />
-            </div>
+            </div> */}
             <SimpleGrid size="xxl" cols={4}>
               {isConnected &&
                 activeElectionInfo._questions[0].choices.map(
@@ -313,6 +347,60 @@ export function Voting() {
                 </Group>
               </Card>
             </Flex> */}
+
+            <div className="flex-column w-100" style={{ paddingTop: "32px" }}>
+              <div className="mbottom-15 z-index-15">
+                {/* Comment Box */}
+                <div className="flex-column w-100">
+                  <div className={"postbox flex-column"}>
+                    <div className={"flex flex-column"}>
+                      <div className="editable-container">
+                        <input
+                          id="postbox-area"
+                          autoFocus={true}
+                          className="editable"
+                          contentEditable={true}
+                          data-placeholder={"Discuss about Inpact Next"}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setComment(e.target.value);
+                            console.log("comment", comment);
+                          }}
+                        ></input>
+                      </div>
+                    </div>
+                    <button
+                      disabled={mutation.isLoading}
+                      className="btn purple md share pointer"
+                      style={{ margin: "16px" }}
+                      onClick={() => commentVoting()}
+                    >
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {loading ? (
+                <p className="center h-align-self-center w-100">
+                  <img src="/img/icons/loading-white.svg" height="35" />
+                </p>
+              ) : (
+                <>
+                  {/** Show posts or empty state */}
+                  {isLoadingComments ? (
+                    <p className="center w-100 tertiary">Loading comments</p>
+                  ) : (
+                    <>
+                      <div className="flex-row mbottom-10 relative">
+                        <div className="flex-1"></div>
+                      </div>
+                      <Posts posts={comments} context={group_id} type="feed" />
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </Flex>
         )}
         {isConnected && isAdmin && (
@@ -420,4 +508,27 @@ export function Voting() {
       </div>
     </ClientOnly>
   );
+}
+
+/** Loop though all posts available and display them */
+function Posts({ posts, context, type, replyTo, setReplyTo }) {
+  /** Display posts */
+  if (posts) {
+    console.log("comments", posts);
+    return posts.map((post, key) => {
+      return (
+        <Post
+          post={post}
+          replyTo={replyTo}
+          setReplyTo={setReplyTo}
+          type={type}
+          showContext={context ? false : true}
+          key={post.stream_id}
+          isNew={post.stream_id == "none" ? true : false}
+        />
+      );
+    });
+  } else {
+    return <p className="white">Loading...</p>;
+  }
 }

@@ -45,7 +45,6 @@ export function Navigation() {
             <Link href={"/vote"}>
               <img src="img/icons/question-mark.png" width={"62px"}></img>
             </Link>
-           
           </div>
         </div>
 
@@ -59,7 +58,7 @@ export function Navigation() {
 
           {/* vocdoni voting */}
           <Space h="md" />
-          <div style={{ backgroundColor: "black" }}>
+          <div>
             <Space h="md" />
             {isConnected ? (
               <Button color="red" fullWidth onClick={() => disconnect()}>
@@ -70,6 +69,7 @@ export function Navigation() {
                 {connectors.map((connector) => (
                   <Button
                     color="gray"
+                    fullWidth
                     disabled={!connector.ready}
                     key={connector.id}
                     onClick={() => connect({ connector })}
