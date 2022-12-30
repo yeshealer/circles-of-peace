@@ -29,9 +29,12 @@ import Causes from "./Causes";
 import { Feed } from "../components/Feed";
 import { Post } from "./post/";
 import { PostBox } from "./PostBox";
+import { scheduleJob } from "node-schedule";
+import { createGroup } from "../utils/create-group";
+import { id } from "ethers/lib/utils.js";
 
 const ActiveElectionId =
-  "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008";
+  "c5d2460186f7ed2ef70e8b1ebf95bdfd7ba692454143b2a8263b020000000013";
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 const causes = Causes();
@@ -47,6 +50,18 @@ export function Voting() {
   const { data: signer } = useSigner();
   const [isAdmin, setIsAdmin] = useState(false);
   const [comment, setComment] = useState();
+  const [scheduledJobDate, setScheduledJobDate] = useState()
+
+  //https://www.npmjs.com/package/node-schedule
+  // const date = new Date(2012, 11, 21, 5, 30, 0);
+  // const [electionEndDate, setElectionEndDate] = useState({
+  //   year: null,
+  //   month: null,
+  //   day: null,
+  //   hour: null,
+  //   minute: null,
+  //   second: null,
+  // });
 
   /** get members */
   useMemo(() => {
@@ -137,6 +152,53 @@ export function Voting() {
     fetchElection();
   }, [signer, vocdoniSDK]);
 
+  // const makeDateFrom = (end) => {
+  //   return {
+  //     new Date()
+  //     year: end.getFullYear(),
+  //     month: end.getMonth(),
+  //     day: end.getDay(),
+  //     hour: end.getHours(),
+  //     minute: end.getMinutes() + 10,
+  //     second: end.getSeconds(),
+  //   };
+  // };
+
+  const findMostVoted = (info) => {
+    let resultsArrInt = [];
+    let resultsArr = info._results[0]; // this returns an array of strings
+    resultsArr.map((voteCount, index) => {
+      resultsArrInt.push(parseInt(voteCount));
+    });
+    let highest = Math.max(resultsArrInt); // find the one with max value.
+    // _results[]
+    console.log(`highest vote: ${highest}`);
+    console.log(
+      `index of highest vote: ${Array.prototype.indexOf(toString(highest))}`
+    );
+    return Array.prototype.indexOf(toString(highest));
+  };
+  const scheduleGroupCreation = (groupCreationDate) => {
+    console.log(`scheduling for: ${JSON.stringify(groupCreationDate)}`);
+
+    // for scheduler, format should be like this:
+    // const date = new Date(2012, 11, 21, 5, 30, 0);
+    scheduleJob(groupCreationDate, async function () {
+      // get election results and build content
+      let content = { name: "", description: "", pfp: "" };
+
+      const info = await vocdoniSDK.fetchElection(ActiveElectionId);
+      let mostVotedIndex = findMostVoted(info);
+
+      content.name = causes[mostVotedIndex].name;
+      content.pfp = causes[mostVotedIndex].imgUrl;
+      content.description = "";
+
+      console.log(`creating group @ scheduled function: ${JSON.stringify(content)}`);
+      createGroup(content); // pass to create-group util
+    });
+  };
+
   // form to create census + add voters from orbis get joined
   const createCensus = async () => {
     const census = new PlainCensus();
@@ -149,8 +211,20 @@ export function Voting() {
 
   const createElection = (census) => {
     const endDate = new Date();
-    endDate.setHours(endDate.getHours() + 10);
 
+    endDate.setMinutes(endDate.getMinutes() + 2); // test purpose
+    // endDate.setHours(endDate.getHours() + 10);
+
+    // const date = new Date(2012, 11, 21, 5, 30, 0);
+    // const [electionEndDate, setElectionEndDate]
+    //= useState({year: null, month: null, day: null, hour: null, minute: null });
+    //  console.log(`setting electionEndDate as: ${JSON.stringify(makeDateFrom(endDate))}`)
+    // setElectionEndDate(makeDateFrom(endDate)); // run 5 minutes after the election ended.
+    
+    let groupCreationDate = new Date();
+    groupCreationDate.setMinutes(endDate.getMinutes() + 3);
+    console.log(`groupCreationDate: ${groupCreationDate}`);
+    setScheduledJobDate(groupCreationDate);
     const election = Election.from({
       title: "Impact Next",
       description: "Peacemaker! If peace is a start, then what's next?",
@@ -162,8 +236,8 @@ export function Voting() {
     });
 
     election.addQuestion(
-      "Impact Next",
-      "Which Sustainable Dev Goal would you like to prioritise next?",
+      "Peace, is a start",
+      "What to impact next?",
       [
         { title: "No Poverty", value: 0 },
         { title: "Zero Hunger", value: 1 },
@@ -180,36 +254,42 @@ export function Voting() {
         { title: "Climate Action", value: 12 },
         { title: "Life Below Water", value: 13 },
         { title: "Life On Land", value: 14 },
-        { title: "Partnerships for the Goals", value: 15 }
+        { title: "Partnerships for the Goals", value: 15 },
       ]
     );
     return election;
   };
 
   const voteElection = async (value) => {
-    console.log("🚀 ~ file: Voting.js:150 ~ value", value);
-    try {
-      setLoading(true);
-      console.log("voting...");
-      vocdoniSDK.wallet = signer;
-      console.log(
-        `setting electionId ( ${lastElectionId} ) to client @ voting..`
-      );
-      vocdoniSDK.setElectionId(lastElectionId);
-      const vote = new Vote([value]);
-      console.log(`submitting vote ${vote}`);
+    // if(electionEndDate < Date.now()) {
+      console.log("🚀 ~ file: Voting.js:150 ~ value", value);
+      try {
+        setLoading(true);
+        console.log("voting...");
+        vocdoniSDK.wallet = signer;
+        console.log(
+          `setting electionId ( ${lastElectionId} ) to client @ voting..`
+        );
+        vocdoniSDK.setElectionId(lastElectionId);
+        const vote = new Vote([value]);
+        console.log(`submitting vote ${vote}`);
+  
+        const confirmationId = await vocdoniSDK.submitVote(vote);
+  
+        console.log(
+          "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
+          confirmationId
+        );
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    // } else {
+    //   alert("This round of \"Impact Next\" is over. See you in the next one!")
 
-      const confirmationId = await vocdoniSDK.submitVote(vote);
-
-      console.log(
-        "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
-        confirmationId
-      );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    // }
+    
   };
 
   const commentVoting = async () => {
@@ -297,7 +377,12 @@ export function Voting() {
                   </Text>
 
                   <Text fz="sm">
-                    Ends{" "}
+                    {activeElectionInfo._endDate < Date.now() ? (
+                      <>ended</>
+                    ) : (
+                      <>ends</>
+                    )}{" "}
+                    {""}
                     <ReactTimeAgo
                       date={activeElectionInfo._endDate}
                       locale="en-US"
@@ -328,8 +413,8 @@ export function Voting() {
                     > */}
                         {/* {choice.title.default} */}
                         <img
-                          width={140}
-                          height={140}
+                          width={120}
+                          height={120}
                           src={causes[choice.value].imgUrl}
                           onClick={() => voteElection(choice.value)}
                           style={{ borderRadius: "20%" }}
@@ -446,6 +531,21 @@ export function Voting() {
                       "🚀 ~ file: Voting.js:149 ~ onClick={ ~ electionId",
                       electionId
                     );
+                    // election.endDate returns in this format:
+                    //Sat Dec 31 2022 09:19:16 GMT+0300 (GMT+03:00)
+
+                    scheduleGroupCreation(scheduledJobDate)
+
+                    console.log(
+                      `election EndDate after creation: ${election.endDate}`
+                    );
+
+                    console.log(
+                      `scheduled time: ${scheduledJobDate}`
+                    );
+
+                    //const date = new Date(2012, 11, 21, 5, 30, 0);
+                    console.log(`sent the endDate to scheduleGroupCreation`);
                     setLastElectionId(electionId); // also set electionId @ component state.
                     vocdoniSDK.setElectionId(electionId);
 

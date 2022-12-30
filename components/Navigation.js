@@ -45,9 +45,9 @@ export function Navigation() {
             <Link href={"/vote"}>
               <img src="img/icons/question-mark.png" width={"62px"}></img>
             </Link>
-            <div onClick={() => setModalVis("create-group", true)}>
+            {/* <div onClick={() => setModalVis("create-group", true)}>
               <img src="img/icons/plus-menu.png" width={"42px"}></img>
-            </div>
+            </div> */}
           </div>
         </div>
 
