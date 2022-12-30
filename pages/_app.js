@@ -8,6 +8,7 @@ import "../styles/utilities.css";
 /** Import some Orbis modules */
 import { CreateChannelModal } from "../components/modals/CreateChannel";
 import { UpdateChannelModal } from "../components/modals/UpdateChannel";
+import { CreateGroupModal } from "../components/modals/CreateGroup";
 import { UpdateGroupModal } from "../components/modals/UpdateGroup";
 import { Navigation } from "../components/Navigation";
 
@@ -167,6 +168,16 @@ function App({ Component, pageProps }) {
 
               {/** Show modals component that should be available at the global level */}
               <ModalsContext.Provider value={{ setModalVis }}>
+                {/** Modal to create a new group */}
+                {createGroupModalVis && (
+                  <CreateGroupModal
+                    visible={true}
+                    setVisible={() => setModalVis("create-group", false)}
+                    channel={tempModalData}
+                    callback={tempCallback}
+                  />
+                )}
+
                 {/** Modal to edit an existing group */}
                 {updateGroupModalVis && (
                   <UpdateGroupModal

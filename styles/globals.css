@@ -1443,7 +1443,9 @@ ul.parameters li {
 .causes-content > img {
   margin-top: 0.6rem;
   width: 62px;
+  padding: 8px;
   border-radius: 22%;
+  cursor: pointer;
 }
 .navigation-level-2-container {
   display: flex;
