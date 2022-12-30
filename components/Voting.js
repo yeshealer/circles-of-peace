@@ -10,7 +10,7 @@ import {
   Card,
   Group,
   Badge,
-  SimpleGrid,
+  SimpleGrid, Tooltip
 } from "@mantine/core";
 import { getAddressFromDid } from "@orbisclub/orbis-sdk/utils";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -34,7 +34,7 @@ import { createGroup } from "../utils/create-group";
 import { id } from "ethers/lib/utils.js";
 
 const ActiveElectionId =
-  "c5d2460186f7ed2ef70e8b1ebf95bdfd7ba692454143b2a8263b020000000013";
+  "c5d2460186f7ed2ef70e8b1ebf95bdfd7ba692454143b2a8263b020000000014";
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 const causes = Causes();
@@ -402,7 +402,7 @@ export function Voting() {
                 activeElectionInfo._questions[0].choices.map(
                   (choice, index) => (
                     <>
-                      <div>
+                      <Tooltip.Floating multiline width={200} label={causes[choice.value].name} color="dark" style={{fontSize: "1.8rem"}}>
                         {/* <Text fz="md">{choice.title.default}</Text> */}
                         {/* <Button
                       color={"violet"}
@@ -420,7 +420,7 @@ export function Voting() {
                           style={{ borderRadius: "20%" }}
                         ></img>
                         {/* </Button> */}
-                      </div>
+                      </Tooltip.Floating>
                     </>
                   )
                 )}
