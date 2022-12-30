@@ -163,7 +163,7 @@ export function Voting() {
 
     election.addQuestion(
       "Impact Next",
-      "What Sustainable Dev Goal would you prioritise?",
+      "Which Sustainable Dev Goal would you like to prioritise next?",
       [
         { title: "No Poverty", value: 0 },
         { title: "Zero Hunger", value: 1 },
