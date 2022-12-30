@@ -172,6 +172,15 @@ export function Voting() {
         { title: "Gender Equality", value: 4 },
         { title: "Clean water and sanitation", value: 5 },
         { title: "Affordable and clean energy", value: 6 },
+        { title: "Decent Work and Economic Growth", value: 7 },
+        { title: "Industry, Innovation and Infrastructure", value: 8 },
+        { title: "Reduced Inequalities", value: 9 },
+        { title: "Sustainable Cities and Communities", value: 10 },
+        { title: "Responsible Consumption and Production", value: 11 },
+        { title: "Climate Action", value: 12 },
+        { title: "Life Below Water", value: 13 },
+        { title: "Life On Land", value: 14 },
+        { title: "Partnerships for the Goals", value: 15 }
       ]
     );
     return election;
@@ -321,7 +330,7 @@ export function Voting() {
                         <img
                           width={140}
                           height={140}
-                          src={causes[choice.value + 1].imgUrl}
+                          src={causes[choice.value].imgUrl}
                           onClick={() => voteElection(choice.value)}
                           style={{ borderRadius: "20%" }}
                         ></img>
