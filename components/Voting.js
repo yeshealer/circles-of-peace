@@ -10,7 +10,9 @@ import {
   Card,
   Group,
   Badge,
-  SimpleGrid, Tooltip
+  SimpleGrid,
+  Tooltip,
+  Anchor,
 } from "@mantine/core";
 import { getAddressFromDid } from "@orbisclub/orbis-sdk/utils";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -34,7 +36,7 @@ import { createGroup } from "../utils/create-group";
 import { id } from "ethers/lib/utils.js";
 
 const ActiveElectionId =
-  "c5d2460186f7ed2ef70e8b1ebf95bdfd7ba692454143b2a8263b020000000014";
+  "c5d2460186f7ed2ef70e8b1ebf95bdfd7ba692454143b2a8263b020000000018";
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 const causes = Causes();
@@ -50,7 +52,8 @@ export function Voting() {
   const { data: signer } = useSigner();
   const [isAdmin, setIsAdmin] = useState(false);
   const [comment, setComment] = useState();
-  const [scheduledJobDate, setScheduledJobDate] = useState()
+  const [scheduledJobDate, setScheduledJobDate] = useState();
+  const [mostVotedCauseIndex, setMostVotedCauseIndex] = useState();
 
   //https://www.npmjs.com/package/node-schedule
   // const date = new Date(2012, 11, 21, 5, 30, 0);
@@ -164,20 +167,39 @@ export function Voting() {
   //   };
   // };
 
+  const getVoteCounts = (info) => {
+    let resultsArrInt = [];
+    let resultsArr = info._results[0]; // this returns an array of strings
+    resultsArr.map((voteCount, index) => {
+      resultsArrInt.push(parseInt(voteCount));
+    });
+    return resultsArr;
+  };
+
   const findMostVoted = (info) => {
     let resultsArrInt = [];
     let resultsArr = info._results[0]; // this returns an array of strings
     resultsArr.map((voteCount, index) => {
       resultsArrInt.push(parseInt(voteCount));
     });
-    let highest = Math.max(resultsArrInt); // find the one with max value.
-    // _results[]
-    console.log(`highest vote: ${highest}`);
-    console.log(
-      `index of highest vote: ${Array.prototype.indexOf(toString(highest))}`
-    );
-    return Array.prototype.indexOf(toString(highest));
+    // console.log(`resultsArrInt after pushing all: ${resultsArrInt}`);
+    // console.log(
+    //   `length resultsArrInt after pushing all: ${resultsArrInt.length}`
+    // );
+
+    let highest = Math.max(...resultsArrInt); // find the one with max value.
+    // console.log(`highest in resultsArrInt: ${highest}`);
+    // console.log(`STRhighest in resultsArrInt: ${highest.toString()}`);
+
+    // console.log(
+    //   `index of highest vote: ${resultsArr.indexOf(highest.toString())}`
+    // );
+
+    return resultsArr.indexOf(highest.toString());
   };
+
+  const isEqualTo = (elem, highest) => elem == highest;
+
   const scheduleGroupCreation = (groupCreationDate) => {
     console.log(`scheduling for: ${JSON.stringify(groupCreationDate)}`);
 
@@ -194,7 +216,9 @@ export function Voting() {
       content.pfp = causes[mostVotedIndex].imgUrl;
       content.description = "";
 
-      console.log(`creating group @ scheduled function: ${JSON.stringify(content)}`);
+      console.log(
+        `creating group @ scheduled function: ${JSON.stringify(content)}`
+      );
       createGroup(content); // pass to create-group util
     });
   };
@@ -212,19 +236,14 @@ export function Voting() {
   const createElection = (census) => {
     const endDate = new Date();
 
-    endDate.setMinutes(endDate.getMinutes() + 2); // test purpose
-    // endDate.setHours(endDate.getHours() + 10);
+    endDate.setHours(endDate.getHours() + 48); // two days
+// endDate.setMinutes(endDate.getMinutes() + 2);
+    // TODO: add automated group creation 
 
-    // const date = new Date(2012, 11, 21, 5, 30, 0);
-    // const [electionEndDate, setElectionEndDate]
-    //= useState({year: null, month: null, day: null, hour: null, minute: null });
-    //  console.log(`setting electionEndDate as: ${JSON.stringify(makeDateFrom(endDate))}`)
-    // setElectionEndDate(makeDateFrom(endDate)); // run 5 minutes after the election ended.
-    
-    let groupCreationDate = new Date();
-    groupCreationDate.setMinutes(endDate.getMinutes() + 3);
-    console.log(`groupCreationDate: ${groupCreationDate}`);
-    setScheduledJobDate(groupCreationDate);
+    // let groupCreationDate = new Date();
+    // groupCreationDate.setMinutes(endDate.getMinutes() + 3);
+    // console.log(`groupCreationDate: ${groupCreationDate}`);
+    // setScheduledJobDate(groupCreationDate);
     const election = Election.from({
       title: "Impact Next",
       description: "Peacemaker! If peace is a start, then what's next?",
@@ -235,61 +254,56 @@ export function Voting() {
       electionType: null,
     });
 
-    election.addQuestion(
-      "Peace, is a start",
-      "What to impact next?",
-      [
-        { title: "No Poverty", value: 0 },
-        { title: "Zero Hunger", value: 1 },
-        { title: "Good health and wellbeing", value: 2 },
-        { title: "Quality Education", value: 3 },
-        { title: "Gender Equality", value: 4 },
-        { title: "Clean water and sanitation", value: 5 },
-        { title: "Affordable and clean energy", value: 6 },
-        { title: "Decent Work and Economic Growth", value: 7 },
-        { title: "Industry, Innovation and Infrastructure", value: 8 },
-        { title: "Reduced Inequalities", value: 9 },
-        { title: "Sustainable Cities and Communities", value: 10 },
-        { title: "Responsible Consumption and Production", value: 11 },
-        { title: "Climate Action", value: 12 },
-        { title: "Life Below Water", value: 13 },
-        { title: "Life On Land", value: 14 },
-        { title: "Partnerships for the Goals", value: 15 },
-      ]
-    );
+    election.addQuestion("Peace, is a start", "What to impact next?", [
+      { title: "No Poverty", value: 0 },
+      { title: "Zero Hunger", value: 1 },
+      { title: "Good health and wellbeing", value: 2 },
+      { title: "Quality Education", value: 3 },
+      { title: "Gender Equality", value: 4 },
+      { title: "Clean water and sanitation", value: 5 },
+      { title: "Affordable and clean energy", value: 6 },
+      { title: "Decent Work and Economic Growth", value: 7 },
+      { title: "Industry, Innovation and Infrastructure", value: 8 },
+      { title: "Reduced Inequalities", value: 9 },
+      { title: "Sustainable Cities and Communities", value: 10 },
+      { title: "Responsible Consumption and Production", value: 11 },
+      { title: "Climate Action", value: 12 },
+      { title: "Life Below Water", value: 13 },
+      { title: "Life On Land", value: 14 },
+      { title: "Partnerships for the Goals", value: 15 },
+    ]);
     return election;
   };
 
   const voteElection = async (value) => {
     // if(electionEndDate < Date.now()) {
-      console.log("🚀 ~ file: Voting.js:150 ~ value", value);
-      try {
-        setLoading(true);
-        console.log("voting...");
-        vocdoniSDK.wallet = signer;
-        console.log(
-          `setting electionId ( ${lastElectionId} ) to client @ voting..`
-        );
-        vocdoniSDK.setElectionId(lastElectionId);
-        const vote = new Vote([value]);
-        console.log(`submitting vote ${vote}`);
-  
-        const confirmationId = await vocdoniSDK.submitVote(vote);
-  
-        console.log(
-          "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
-          confirmationId
-        );
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
+    console.log("🚀 ~ file: Voting.js:150 ~ value", value);
+    try {
+      setLoading(true);
+      console.log("voting...");
+      vocdoniSDK.wallet = signer;
+      console.log(
+        `setting electionId ( ${lastElectionId} ) to client @ voting..`
+      );
+      vocdoniSDK.setElectionId(lastElectionId);
+      const vote = new Vote([value]);
+      console.log(`submitting vote ${vote}`);
+
+      const confirmationId = await vocdoniSDK.submitVote(vote);
+
+      console.log(
+        "🚀 ~ file: Voting.js:149 ~ <Button onClick={ ~ confirmationId",
+        confirmationId
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
     // } else {
     //   alert("This round of \"Impact Next\" is over. See you in the next one!")
 
     // }
-    
   };
 
   const commentVoting = async () => {
@@ -326,57 +340,29 @@ export function Voting() {
             wrap="wrap"
             w="full"
           >
-            {/* <Flex align={"center"} direction={"column"}>
-              <Title order={2}>{activeElectionInfo._title.default}</Title>
-              <Text fz="sm">id: {activeElectionInfo._id}</Text>
-            </Flex>
-            <Text fz="xl" weight={400}>
-              {activeElectionInfo._description.default}
-            </Text> */}
-
-            <div
-              style={{ width: 540, marginLeft: "auto", marginRight: "auto" }}
+            <Flex
+              direction={"column"}
+              align="center"
+              style={{ paddingBloxk: "2rem" }}
             >
-              {/* <Image
-                radius="md"
-                src={activeElectionInfo._header}
-                alt="Random unsplash image"
-              /> */}
-            </div>
-            <Flex direction={"column"}>
-              {/* <Card shadow="sm" p="lg" radius="md" withBorder> */}
-              {/* <Card.Section> </Card.Section> */}
-              {/* <Text fz="md">
-                  URI: {activeElectionInfo._census._censusURI}
-                </Text>
-                <Text fz="md">ID: {activeElectionInfo._census._censusId}</Text> */}
-              {/* </Card> */}
-            </Flex>
-            {/* final result: {activeElectionInfo._finalResults} */}
-            <Flex direction={"column"} align="center">
-              <Card shadow="sm" p="lg" radius="md" withBorder>
+              <Card shadow="md" p="xl" radius="md" withBorder>
                 <Title order={3}>
                   {activeElectionInfo._questions[0].title.default}
                 </Title>
-                <Text fz="lg">
+                <Text fz="lg" style={{ marginBottom: "2rem" }}>
                   {activeElectionInfo._questions[0].description.default}
                 </Text>
-                <Group position="apart" mt="md" mb="xs">
-                  {/* <Text weight={500}>Census</Text> */}
-                  <Badge color="dark" variant="light" size="xl">
-                    Total vote: {activeElectionInfo._voteCount}
-                  </Badge>
-                </Group>
+
                 <Flex direction={"row"} gap={"md"}>
-                  <Text fz="sm">
-                    Started{" "}
+                  <Text style={{ color: "white", fontSize: "1.2rem" }}>
+                    Election started{" "}
                     <ReactTimeAgo
                       date={activeElectionInfo._startDate}
                       locale="en-US"
                     />
                   </Text>
-
-                  <Text fz="sm">
+                  &
+                  <Text style={{ color: "white", fontSize: "1.2rem" }}>
                     {activeElectionInfo._endDate < Date.now() ? (
                       <>ended</>
                     ) : (
@@ -387,8 +373,82 @@ export function Voting() {
                       date={activeElectionInfo._endDate}
                       locale="en-US"
                     />
+                    .
                   </Text>
                 </Flex>
+              
+                <br></br>
+                {activeElectionInfo._endDate < Date.now() &&
+                !activeElectionInfo._voteCount == 0 ? (
+                  <>
+                   <Text
+                      style={{
+                        fontSize: "1.4rem",
+                        marginBottom: "2rem",
+                        marginTop: "2rem",
+                      }}
+                    >
+                      {" "}
+                      With {activeElectionInfo._voteCount} votes, <strong>{causes[findMostVoted(activeElectionInfo)].name}</strong> is most wanted to be
+                      next cause to start a group here.
+                     
+                    </Text>
+                    <Tooltip.Floating
+                      multiline
+                      width={200}
+                      label={
+                        causes[findMostVoted(activeElectionInfo)].name +
+                        " : " +
+                        getVoteCounts(activeElectionInfo)[
+                          findMostVoted(activeElectionInfo)
+                        ] +
+                        " votes"
+                      }
+                      color="dark"
+                      style={{ fontSize: "1.8rem" }}
+                    >
+                      <img
+                        width={120}
+                        height={120}
+                        src={causes[findMostVoted(activeElectionInfo)].imgUrl}
+                        style={{ borderRadius: "20%" }}
+                      ></img>
+                      {/* </Button> */}
+                    </Tooltip.Floating>
+                   
+
+                    <Text
+                      style={{
+                        fontSize: "1.4rem",
+                        marginBottom: "2rem",
+                        marginTop: "2rem",
+                      }}
+                    >
+                   
+                      Learn more about this Sustainable Development Goal @{" "}
+                      <Anchor
+                        href={
+                          "https://sdgs.un.org/goals/goal" +
+                          (findMostVoted(activeElectionInfo) + 1).toString()
+                        }
+                        target="_blank"
+                      >
+                        United Nations
+                      </Anchor>{" "}
+                      and{" "}
+                      <Anchor
+                        href={
+                          "https://en.wikipedia.org/wiki/Sustainable_Development_Goal_" +
+                          (findMostVoted(activeElectionInfo) + 1).toString()
+                        }
+                        target="_blank"
+                      >
+                        Wikipedia
+                      </Anchor>
+                      .
+                    </Text>
+                  </>
+                ) : null}
               </Card>
             </Flex>
             {/* <div style={{ backgroundColor: "gray" }}>
@@ -397,34 +457,66 @@ export function Voting() {
                 results={activeElectionInfo.results[0]}
               />
             </div> */}
-            <SimpleGrid size="xxl" cols={4}>
-              {isConnected &&
-                activeElectionInfo._questions[0].choices.map(
-                  (choice, index) => (
-                    <>
-                      <Tooltip.Floating multiline width={200} label={causes[choice.value].name} color="dark" style={{fontSize: "1.8rem"}}>
-                        {/* <Text fz="md">{choice.title.default}</Text> */}
-                        {/* <Button
-                      color={"violet"}
-                      fullWidth
-                      loading={loading}
-                      loaderPosition="center"
-                      onClick={() => voteElection(choice.value)}
-                    > */}
-                        {/* {choice.title.default} */}
-                        <img
-                          width={120}
-                          height={120}
-                          src={causes[choice.value].imgUrl}
-                          onClick={() => voteElection(choice.value)}
-                          style={{ borderRadius: "20%" }}
-                        ></img>
-                        {/* </Button> */}
-                      </Tooltip.Floating>
-                    </>
-                  )
-                )}
-            </SimpleGrid>
+
+            {activeElectionInfo._endDate < Date.now() ? (
+              //  null
+              <SimpleGrid size="xxl" cols={4}>
+                {isConnected &&
+                  activeElectionInfo._questions[0].choices.map(
+                    (choice, index) => (
+                      <>
+                        <Tooltip.Floating
+                          multiline
+                          width={200}
+                          label={
+                            causes[index].name +
+                            " : " +
+                            getVoteCounts(activeElectionInfo)[index] +
+                            " votes"
+                          }
+                          color="dark"
+                          style={{ fontSize: "1.8rem" }}
+                        >
+                          <img
+                            width={120}
+                            height={120}
+                            src={causes[choice.value].imgUrl}
+                            onClick={() => voteElection(choice.value)}
+                            style={{ borderRadius: "20%" }}
+                          ></img>
+                          {/* </Button> */}
+                        </Tooltip.Floating>
+                      </>
+                    )
+                  )}
+              </SimpleGrid>
+            ) : (
+              <SimpleGrid size="xxl" cols={4}>
+                {isConnected &&
+                  activeElectionInfo._questions[0].choices.map(
+                    (choice, index) => (
+                      <>
+                        <Tooltip.Floating
+                          multiline
+                          width={200}
+                          label={causes[choice.value].name}
+                          color="dark"
+                          style={{ fontSize: "1.8rem" }}
+                        >
+                          <img
+                            width={120}
+                            height={120}
+                            src={causes[choice.value].imgUrl}
+                            onClick={() => voteElection(choice.value)}
+                            style={{ borderRadius: "20%" }}
+                          ></img>
+                          {/* </Button> */}
+                        </Tooltip.Floating>
+                      </>
+                    )
+                  )}
+              </SimpleGrid>
+            )}
 
             {/* <Flex direction={"column"}>
               <Card shadow="sm" p="lg" radius="md" withBorder>
@@ -534,15 +626,13 @@ export function Voting() {
                     // election.endDate returns in this format:
                     //Sat Dec 31 2022 09:19:16 GMT+0300 (GMT+03:00)
 
-                    scheduleGroupCreation(scheduledJobDate)
+                    // scheduleGroupCreation(scheduledJobDate);
 
                     console.log(
                       `election EndDate after creation: ${election.endDate}`
                     );
 
-                    console.log(
-                      `scheduled time: ${scheduledJobDate}`
-                    );
+                    console.log(`scheduled time: ${scheduledJobDate}`);
 
                     //const date = new Date(2012, 11, 21, 5, 30, 0);
                     console.log(`sent the endDate to scheduleGroupCreation`);
