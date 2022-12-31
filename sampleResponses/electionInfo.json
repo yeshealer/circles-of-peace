@@ -1,0 +1,151 @@
+{
+  "_title": { "default": "Impact Next" },
+  "_description": {
+    "default": "Peacemaker! If peace is a start, then what's next?"
+  },
+  "_header": "https://source.unsplash.com/random",
+  "_streamUri": "https://source.unsplash.com/random",
+  "_startDate": "2022-12-27T11:22:52.139Z",
+  "_endDate": "2022-12-27T21:24:27.440Z",
+  "_electionType": {
+    "autoStart": true,
+    "interruptible": true,
+    "dynamicCensus": false,
+    "secretUntilTheEnd": false,
+    "anonymous": false
+  },
+  "_voteType": {
+    "uniqueChoices": false,
+    "maxVoteOverwrites": 1,
+    "costFromWeight": false,
+    "costExponent": 10000
+  },
+  "_questions": [
+    {
+      "title": { "default": "Impact Next" },
+      "description": {
+        "default": "What Sustainable Dev Goal would you prioritise?"
+      },
+      "choices": [
+        { "title": { "default": "No Poverty" }, "value": 0, "results": "0" },
+        { "title": { "default": "Zero Hunger" }, "value": 1, "results": "1" },
+        {
+          "title": { "default": "Good health and wellbeing" },
+          "value": 2,
+          "results": "0"
+        },
+        {
+          "title": { "default": "Quality Education" },
+          "value": 3,
+          "results": "0"
+        },
+        {
+          "title": { "default": "Gender Equality" },
+          "value": 4,
+          "results": "1"
+        },
+        {
+          "title": { "default": "Clean water and sanitation" },
+          "value": 5,
+          "results": "0"
+        },
+        {
+          "title": { "default": "Affordable and clean energy" },
+          "value": 6,
+          "results": "0"
+        }
+      ]
+    }
+  ],
+  "_census": {
+    "_censusId": "6c78c88ba2d625ee1dfea32f01d8ca4aa9c5733ac8e8515a898df40b5183e60b",
+    "_censusURI": "ipfs://bagaaierahiar675qrcsz7mrnfgu2d5p4552cdbrfppyd7enujsccoqmzdaba",
+    "_type": "weighted"
+  },
+  "_id": "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008",
+  "_status": 1,
+  "_voteCount": 3,
+  "_finalResults": false,
+  "_results": [["0", "1", "0", "0", "1", "0", "0"]],
+  "_electionCount": 0,
+  "_creationTime": "2022-12-27T11:22:40.000Z",
+  "_metadataURL": "ipfs://bagaaiera3nqmvwhft6ihvvs6lwdzwffeznkaquioe67pog7tzpvfvvsrvuya",
+  "_raw": {
+    "electionId": "c5d2460186f7b6c90493e2df4797854716358a092b8a72441a02020000000008",
+    "status": "READY",
+    "startDate": "2022-12-27T11:22:52.139434581Z",
+    "endDate": "2022-12-27T21:24:27.44011664Z",
+    "voteCount": 3,
+    "finalResults": false,
+    "result": [["0", "1", "0", "0", "1", "0", "0"]],
+    "electionCount": 0,
+    "census": {
+      "censusOrigin": "OFF_CHAIN_TREE_WEIGHTED",
+      "censusRoot": "6c78c88ba2d625ee1dfea32f01d8ca4aa9c5733ac8e8515a898df40b5183e60b",
+      "postRegisterCensusRoot": "",
+      "censusURL": "ipfs://bagaaierahiar675qrcsz7mrnfgu2d5p4552cdbrfppyd7enujsccoqmzdaba"
+    },
+    "metadataURL": "ipfs://bagaaiera3nqmvwhft6ihvvs6lwdzwffeznkaquioe67pog7tzpvfvvsrvuya",
+    "creationTime": "2022-12-27T11:22:40Z",
+    "voteMode": {
+      "serial": false,
+      "anonymous": false,
+      "encryptedVotes": false,
+      "uniqueValues": false,
+      "costFromWeight": false
+    },
+    "electionMode": {
+      "autoStart": true,
+      "interruptible": true,
+      "dynamicCensus": false,
+      "encryptedMetaData": false,
+      "preRegister": false
+    },
+    "tallyMode": {
+      "maxCount": 1,
+      "maxValue": 6,
+      "maxVoteOverwrites": 1,
+      "maxTotalCost": 0,
+      "costExponent": 10000
+    },
+    "metadata": {
+      "title": { "default": "Impact Next" },
+      "version": "1.1",
+      "description": {
+        "default": "Peacemaker! If peace is a start, then what's next?"
+      },
+      "media": {
+        "header": "https://source.unsplash.com/random",
+        "streamUri": "https://source.unsplash.com/random"
+      },
+      "meta": {},
+      "questions": [
+        {
+          "choices": [
+            { "title": { "default": "No Poverty" }, "value": 0 },
+            { "title": { "default": "Zero Hunger" }, "value": 1 },
+            { "title": { "default": "Good health and wellbeing" }, "value": 2 },
+            { "title": { "default": "Quality Education" }, "value": 3 },
+            { "title": { "default": "Gender Equality" }, "value": 4 },
+            {
+              "title": { "default": "Clean water and sanitation" },
+              "value": 5
+            },
+            {
+              "title": { "default": "Affordable and clean energy" },
+              "value": 6
+            }
+          ],
+          "description": {
+            "default": "What Sustainable Dev Goal would you prioritise?"
+          },
+          "title": { "default": "Impact Next" }
+        }
+      ],
+      "results": {
+        "aggregation": "discrete-counting",
+        "display": "multiple-question"
+      }
+    }
+  }
+}

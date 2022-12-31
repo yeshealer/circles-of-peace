@@ -14,7 +14,7 @@ import { GlobalContext } from "../contexts/GlobalContext";
 let _mentions = [];
 
 /** Export postbox component */
-export function PostBox({ type = "feed", action = "share-post", editedPost = null, callback, placeholder = "Share your post here...", context = null, master = null, reply_to = null, encryptionRules = null, setEditPost }) {
+export function PostBox({ type = "feed", action = "share-post", editedPost = null, callback, placeholder = "Anything non-violent is an Expression of Peace", context = null, master = null, reply_to = null, encryptionRules = null, setEditPost }) {
   const { user, setUser, orbis } = useContext(GlobalContext);
   const [content, setContent] = useState(editedPost ? editedPost.content?.body : null);
   const [status, setStatus] = useState(0);
@@ -459,7 +459,7 @@ function ShareButtonContent({type, status, share}) {
       switch (status) {
         /** User hasn't started sharing */
         case 0:
-          return <div className="btn purple md share pointer" onClick={() => share()}>Share</div>;
+          return <div className="btn purple md share pointer" onClick={() => share()}>Express</div>;
 
         /** Waiting for response from Orbis SDK */
         case 1:
@@ -475,7 +475,7 @@ function ShareButtonContent({type, status, share}) {
 
         /** Default */
         default:
-          return <div className="btn md purple pointer">Share</div>;
+          return <div className="btn md purple pointer">Express</div>;
       }
       break;
 
@@ -500,7 +500,7 @@ function ShareButtonContent({type, status, share}) {
 
         /** Default */
         default:
-          return <span className="link-edit" onClick={() => share()}>Share</span>;
+          return <span className="link-edit" onClick={() => share()}>Express</span>;
       }
         break;
 

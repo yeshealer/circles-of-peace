@@ -130,7 +130,7 @@ export function Post({post, type, showContext = true, replyTo, setReplyTo = fals
           <div className="flex suffix h-flex-end">
             {post.timestamp &&
               <span className="secondary fs-14"><ReactTimeAgo date={post.timestamp * 1000} locale="en-US" /></span>
-            }
+            } 
           </div>
         :
           <div className="flex suffix h-flex-start ptop-2">
@@ -205,8 +205,8 @@ export function Post({post, type, showContext = true, replyTo, setReplyTo = fals
 
             {/** Show post reactions CTA (like, haha and downvote) */}
             <Reaction active={userReaction == "like" ? true : false} post_id={post.stream_id} type="like" count={post.count_likes ? post.count_likes : 0} />
-            <Reaction active={userReaction == "haha" ? true : false} post_id={post.stream_id} type="haha" count={post.count_haha ? post.count_haha : 0} />
-            <Reaction active={userReaction == "downvote" ? true : false} post_id={post.stream_id} type="downvote" />
+            {/* <Reaction active={userReaction == "haha" ? true : false} post_id={post.stream_id} type="haha" count={post.count_haha ? post.count_haha : 0} /> */}
+            {/* <Reaction active={userReaction == "downvote" ? true : false} post_id={post.stream_id} type="downvote" /> */}
           </div>
 
           <div className="reactions flex-row h-flex-end v-align-items-center">

@@ -53,7 +53,7 @@ export function GroupDetails() {
 
     if(group.content.pfp || group.content.metadata?.pfp) {
       if(group.content.pfp) {
-        return <img src="https://expressionsofpeace.org/colorful-peace.png" className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
+        return <img src="img/colorful-peace.png" className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
 
         // return <img src={group.content.pfp} className={isAdmin ? "pfp admin" : "pfp"} onClick={onClick ? onClick : null} />;
       }
@@ -93,7 +93,7 @@ export function GroupDetails() {
 
                 {/** Only display description if available */}
                 {group.content.description &&
-                  <p className="mbottom-0">GenerationPeace! How would you imagine, express, acknowledge and make a World Peace, in the 21st century?</p>
+                  <p className="mbottom-0">GenerationPeace! <br></br> How would you imagine, express and make <br></br> a World Peace?</p>
                 }
                 {group.content.metadata?.description &&
                   <p className="mbottom-0">{group.content.metadata?.description}</p>
@@ -127,9 +127,9 @@ export function GroupDetails() {
             <div className="group-channels">
               {/** Show home channel */}
               <MenuItemLevel2
-                title="home"
-                image="/img/icons/group-home-grey.png"
-                imageActive="/img/icons/group-home-white.png"
+                title="# mainstream"
+                // image="/img/icons/group-home-grey.png"
+                // imageActive="/img/icons/group-home-white.png"
                 route={"/"}
                 active={!channel_id ? true : false} />
 
@@ -156,19 +156,28 @@ function LoopChannels({channels}) {
   const router = useRouter();
   const { channel_id } = router.query;
 
-  return channels.map((channel, key) => {
-    if(channel.content) {
+  // for now only list first channel
       return (
-        <MenuItemLevel2
-        key={key}
-          title={channel.content.name}
-          image={getChannelIcon(channel, false)}
-          imageActive={getChannelIcon(channel, true)}
-          route={"/" + channel.stream_id}
-          active={channel_id == channel.stream_id ? true : false} />
-      )
-    } else {
-      return null;
-    }
-  });
+          <MenuItemLevel2
+          key={channels[0].stream_id}
+            title={channels[0].content.name}
+            image={getChannelIcon(channels[0], false)}
+            imageActive={getChannelIcon(channels[0], true)}
+            route={"/" + channels[0].stream_id}
+            active={channel_id == channels[0].stream_id ? true : false} />);
+  // return channels.map((channel, key) => {
+  //   if(channel.content) {
+  //     return (
+  //       <MenuItemLevel2
+  //       key={key}
+  //         title={channel.content.name}
+  //         image={getChannelIcon(channel, false)}
+  //         imageActive={getChannelIcon(channel, true)}
+  //         route={"/" + channel.stream_id}
+  //         active={channel_id == channel.stream_id ? true : false} />
+  //     )
+  //   } else {
+  //     return null;
+  //   }
+  // });
 }

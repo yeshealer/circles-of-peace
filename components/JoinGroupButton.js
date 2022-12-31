@@ -31,8 +31,11 @@ export function JoinGroupButton({group_id}) {
     }
 
     if(data) {
+      console.log(`already user ${JSON.stringify(data)}`)
       setHasJoined(data);
     } else {
+      console.log(` user left group..`)
+
       setHasJoined(false);
     }
 
@@ -53,7 +56,7 @@ export function JoinGroupButton({group_id}) {
         await sleep(2000);
         setHasJoined(active);
         setJoinStatus(0);
-        getUserGroups();
+        // getUserGroups();
         break;
       default:
         setJoinStatus(3);

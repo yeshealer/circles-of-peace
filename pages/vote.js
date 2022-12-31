@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useRouter } from 'next/router'
-import Head from 'next/head'
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
 
-/** Import Orbis SDK */
-import { Orbis } from "@orbisclub/orbis-sdk";
-
-import { Feed } from "../components/Feed";
 import { RightSide } from "../components/RightSide";
 
 /** Import Context */
 import { GlobalContext } from "../contexts/GlobalContext";
+
+/** Import Voting */
+import { Voting } from "../components/Voting";
 
 /** Global component for group details */
 export default function GroupHome() {
@@ -23,7 +21,7 @@ export default function GroupHome() {
   async function loadGroupDetails() {
     let { data, error } = await orbis.getGroup(group_id);
 
-    if(data) {
+    if (data) {
       setGroup(data);
     }
   }
@@ -32,7 +30,7 @@ export default function GroupHome() {
   const router = useRouter();
   const { channel_id } = router.query;
 
-  return(
+  return (
     <>
       <div className="main-container">
         {/** Feed container */}
@@ -40,17 +38,14 @@ export default function GroupHome() {
           <div className="flex-column flex-1">
             {/** Show channel details */}
             <div className="channel-details flex-column v-justify-content-center mbottom-15">
-              {/* <div className="flex-row">
-                <img src="/img/icons/group-home-white.png" height="15" className="mright-5" />
-                <p className="m-0 fw-400">home</p>
-              </div> */}
-                <p className="secondary m-0 mtop-8 express-yourself">Express yourself!</p>
+              <div style={{ cursor: "pointer" }} onClick={() => router.back()}>
+              {"<< "} back
+              </div>
+            
             </div>
 
-            {/** Show posts feed */}
-            {group_id &&
-              <Feed type="feed" context={group_id} autoRefresh={true} />
-            }
+            {/** Show voting feed */}
+            {group_id && <Voting />}
           </div>
         </div>
 
@@ -58,5 +53,5 @@ export default function GroupHome() {
         <RightSide type="group-members" details={group_id} />
       </div>
     </>
-  )
+  );
 }
