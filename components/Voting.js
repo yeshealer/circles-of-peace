@@ -31,7 +31,7 @@ import Causes from "./Causes";
 import { Feed } from "../components/Feed";
 import { Post } from "./post/";
 import { PostBox } from "./PostBox";
-import { scheduleJob } from "node-schedule";
+// import { scheduleJob } from "node-schedule";
 import { createGroup } from "../utils/create-group";
 import { id } from "ethers/lib/utils.js";
 
@@ -237,8 +237,8 @@ export function Voting() {
     const endDate = new Date();
 
     endDate.setHours(endDate.getHours() + 48); // two days
-// endDate.setMinutes(endDate.getMinutes() + 2);
-    // TODO: add automated group creation 
+    // endDate.setMinutes(endDate.getMinutes() + 2);
+    // TODO: add automated group creation
 
     // let groupCreationDate = new Date();
     // groupCreationDate.setMinutes(endDate.getMinutes() + 3);
@@ -376,12 +376,12 @@ export function Voting() {
                     .
                   </Text>
                 </Flex>
-              
+
                 <br></br>
                 {activeElectionInfo._endDate < Date.now() &&
                 !activeElectionInfo._voteCount == 0 ? (
                   <>
-                   <Text
+                    <Text
                       style={{
                         fontSize: "1.4rem",
                         marginBottom: "2rem",
@@ -389,9 +389,11 @@ export function Voting() {
                       }}
                     >
                       {" "}
-                      With {activeElectionInfo._voteCount} votes, <strong>{causes[findMostVoted(activeElectionInfo)].name}</strong> is most wanted to be
-                      next cause to start a group here.
-                     
+                      With {activeElectionInfo._voteCount} votes,{" "}
+                      <strong>
+                        {causes[findMostVoted(activeElectionInfo)].name}
+                      </strong>{" "}
+                      is most wanted to be next cause to start a group here.
                     </Text>
                     <Tooltip.Floating
                       multiline
@@ -415,7 +417,6 @@ export function Voting() {
                       ></img>
                       {/* </Button> */}
                     </Tooltip.Floating>
-                   
 
                     <Text
                       style={{
@@ -424,7 +425,6 @@ export function Voting() {
                         marginTop: "2rem",
                       }}
                     >
-                   
                       Learn more about this Sustainable Development Goal @{" "}
                       <Anchor
                         href={
