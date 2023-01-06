@@ -30,6 +30,8 @@ export default function GroupHome() {
   const router = useRouter();
   const { channel_id } = router.query;
 
+  console.log(group_id)
+
   return (
     <>
       <div className="main-container">
