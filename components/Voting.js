@@ -67,7 +67,7 @@ export function Voting() {
   // });
 
   /** get members */
-  useMemo(() => {
+  useEffect(() => {
     console.log("🚀 ~ file: Voting.js:32 ~ useMemo ~ group_id", group_id);
     if (group_id) {
       loadMembers();
@@ -379,7 +379,7 @@ export function Voting() {
 
                 <br></br>
                 {activeElectionInfo._endDate < Date.now() &&
-                !activeElectionInfo._voteCount == 0 ? (
+                  !activeElectionInfo._voteCount == 0 ? (
                   <>
                     <Text
                       style={{
@@ -402,7 +402,7 @@ export function Voting() {
                         causes[findMostVoted(activeElectionInfo)].name +
                         " : " +
                         getVoteCounts(activeElectionInfo)[
-                          findMostVoted(activeElectionInfo)
+                        findMostVoted(activeElectionInfo)
                         ] +
                         " votes"
                       }
